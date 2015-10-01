@@ -2,8 +2,7 @@
 
 # Installation
 
-## Bash
-Put `scripts` folder into your home directory.
-Copy `bash/.bash_profile` to your home directory or add its content to your existing one.
-
-Or do the setup however the hell you want.
+## Bash configuration
+```
+$ git clone https://github.com/Sloy/scripts.git ~/scripts/ && cat ~/scripts/bash/.bash_profile >> ~/.bash_profile
+```
