@@ -22,7 +22,7 @@
   graph = log --graph --pretty=oneline --abbrev-commit
   amend = commit --amend --no-edit
   fire = "!f() { git reset --hard; git clean -f -d; }; f"
-  bclean = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
+  bclean = "!git branch --merged | grep -v \"*\" | grep -v master | grep -v develop | grep -v sonar | xargs -n 1 git branch -d"
 
 [push]
 	default = simple

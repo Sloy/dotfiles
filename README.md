@@ -17,12 +17,12 @@
 - **meh:** `¯\_(シ)_/¯`
 
 ### Git aliases
+- **git fire**: [reset hard and remove untracked files](http://gifs.gifbin.com/25yuswsw28295.gif)
+- **git bclean**: delete merged branches except for *"develop"*, *"master"* and *"sonar"* (a special one of mine)
 - **git ci**: commit
 - **git co**: checkout
 - **git br**: branch
 - **git amend**: commit --amend --no-edit
-- **git fire**: [reset hard and remove untracked files](http://gifs.gifbin.com/25yuswsw28295.gif)
-- **git bclean**: delete merged branches *//TODO  i've got a better one somewhere around*
 
 # Installation
 
