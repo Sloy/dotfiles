@@ -23,6 +23,9 @@
   amend = commit --amend --no-edit
   fire = "!f() { git reset --hard; git clean -f -d; }; f"
   bclean = "!git branch --merged | grep -v \"*\" | grep -v master | grep -v develop | grep -v sonar | xargs -n 1 git branch -d"
+  cleanup = "!f() { git fetch --prune; git bclean ; }; f"
+  nuke = !sh -c 'git branch -D $1 && git push origin :$1' -
+[push]
 
 [push]
 	default = simple
