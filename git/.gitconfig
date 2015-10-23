@@ -6,8 +6,8 @@
 	excludesfile = ~/.gitignore_global
 	editor = nano
 	precomposeunicode = true
-[core]
 	autocrlf = input
+	ignorecase = false
 [color]
 	ui = true
 
