@@ -4,6 +4,8 @@
 
 ### Bash aliases
 
+#### Git
+- **g:** git
 #### Gradle wrapper
 - **gw:** ./gradlew
 - **gbuild:** ./gradlew build
@@ -23,7 +25,7 @@
 - **git co**: checkout
 - **git br**: branch
 - **git amend**: commit --amend --no-edit
-- **git cleanup**: git fetch --prune and then bclean
+- **git roomba**: git fetch --prune and then bclean
 - **git nuke _branch_name_**: remove branch from local and remote
 
 # Installation
