@@ -4,6 +4,7 @@ source ./paths/android_osx.sh
 # Aliases for OSX terminal
 source ./alias/osx.sh
 source ./alias/gradle.sh
+source ./alias/git.sh
 
 # Terminal appearance
 ## http://osxdaily.com/2013/02/05/improve-terminal-appearance-mac-os-x/
