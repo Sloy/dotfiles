@@ -25,6 +25,8 @@
   bclean = "!git branch --merged | grep -v \"*\" | grep -v master | grep -v develop | grep -v sonar | xargs -n 1 git branch -d"
   roomba = "!f() { git bclean ; git fetch --prune}; f"
   nuke = !sh -c 'git branch -D $1 && git push origin :$1' -
+  wip = commit -a -m "WIP"
+  unwip = reset --soft HEAD^
 
 [push]
 	default = simple
