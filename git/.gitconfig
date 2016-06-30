@@ -27,6 +27,7 @@
 	nuke = !sh -c 'git branch -D $1 && git push origin :$1' -
 	wip = commit -a -m "WIP"
 	unwip = reset --soft HEAD^
+	pushf = push --force-with-lease
 
 [push]
 	default = simple
