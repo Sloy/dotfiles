@@ -1,6 +1,7 @@
 [user]
 	name = Rafa Vázquez
 	email = rafa.vazsan@gmail.com
+
 [core]
 	excludefile = ~/.gitignore
 	excludesfile = ~/.gitignore_global
@@ -8,6 +9,7 @@
 	precomposeunicode = true
 	autocrlf = input
 	ignorecase = false
+	
 [color]
 	ui = true
 
@@ -20,13 +22,22 @@
 	type = cat-file -t
 	dump = cat-file -p
 	graph = log --graph --pretty=oneline --abbrev-commit
-	amend = commit --amend --no-edit
-	fire = "!f() { git reset --hard; git clean -f -d; }; f"
-	bclean = "!git branch --merged | grep -v \"*\" | grep -v master | grep -v develop | grep -v sonar | xargs -n 1 git branch -d"
-	roomba = "!f() { git bclean ; git fetch --prune;}; f"
-	nuke = !sh -c 'git branch -D $1 && git push origin :$1' -
+
+	# Amends last commit with the index skipping the message editting
+  amend = commit --amend --no-edit
+	# Destroys all tracked and untracked changes
+  fire = "!f() { git reset --hard; git clean -f -d; }; f"
+	# Deletes local merged branches except for master and develop
+  bclean = "!git branch --merged | grep -v \"*\" | grep -v master | grep -v develop | xargs -n 1 git branch -d"
+	# Deletes local merged branches (bclean) and branches remote references to deleted branches
+  roomba = "!f() { git fetch --prune; git bclean ; }; f"
+	# Deletes a branch locally and remotely (forced)
+  nuke = !sh -c 'git branch -D $1 && git push origin :$1' -
+	# Commits current changes with a "WIP" message
 	wip = commit -a -m "WIP"
+	# Soft resets last commit (reverses the command wip)
 	unwip = reset --soft HEAD^
+	# Forced push variant that checks for unknown changes in remote
 	pushf = push --force-with-lease
 
 [push]
