@@ -42,28 +42,39 @@
 
 	# Amends last commit with the index skipping the message editting
   amend = commit --amend --no-edit
+
 	# Destroys all tracked and untracked changes
   fire = "!f() { git reset --hard; git clean -f -d; }; f"
+
 	# Deletes local merged branches except for master and develop
   bclean = "!git branch --merged | grep -v \"*\" | grep -v master | grep -v develop | xargs -n 1 git branch -d"
+
 	# Deletes local merged branches (bclean) and branches remote references to deleted branches
   roomba = "!f() { git fetch --prune; git bclean ; }; f"
+
 	# Deletes a branch locally and remotely (forced)
   nuke = !sh -c 'git branch -D $1 && git push origin :$1' -
+
 	# Commits current changes with a "WIP" message
 	wip = commit -a -m "WIP"
+
 	# Soft resets last commit (reverses the command wip)
 	unwip = reset --soft HEAD^
+
 	# Forced push variant that checks for unknown changes in remote
 	pushf = push --force-with-lease
+
 	# Show verbose output about tags, branches or remotes
 	tags = tag -l
 	branches = branch -a
 	remotes = remote -v
+
 	# Interactive rebase with the given number of latest commits
 	reb = "!r() { git rebase -i HEAD~$1; }; r"
+
 	# Find tags containing commit
 	ft = "!f() { git describe --always --contains $1; }; f"
+
 	# List contributors with number of commits
 	contributors = shortlog --summary --numbered
 
@@ -72,4 +83,4 @@
 
 [commit]
 	# https://help.github.com/articles/signing-commits-using-gpg/
-	gpgsign = true
+	#gpgsign = true
