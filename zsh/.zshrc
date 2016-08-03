@@ -84,6 +84,8 @@ source $ZSH/oh-my-zsh.sh
 
 alias zshconfig="open ~/.zshrc"
 alias ohmyzsh="open ~/.oh-my-zsh"
+alias reload!='. ~/.zshrc'
+alias cls='clear'
 alias j="jump"
 
 ## Hidden files in Finder
