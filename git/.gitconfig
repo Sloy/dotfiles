@@ -9,7 +9,7 @@
 	precomposeunicode = true
 	autocrlf = input
 	ignorecase = false
-	
+
 [color]
 	ui = true
 
@@ -39,6 +39,16 @@
 	unwip = reset --soft HEAD^
 	# Forced push variant that checks for unknown changes in remote
 	pushf = push --force-with-lease
+	# Show verbose output about tags, branches or remotes
+	tags = tag -l
+	branches = branch -a
+	remotes = remote -v
+	# Interactive rebase with the given number of latest commits
+	reb = "!r() { git rebase -i HEAD~$1; }; r"
+	# Find tags containing commit
+	ft = "!f() { git describe --always --contains $1; }; f"
+	# List contributors with number of commits
+	contributors = shortlog --summary --numbered
 
 [push]
 	default = simple
