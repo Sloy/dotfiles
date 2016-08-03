@@ -9,9 +9,26 @@
 	precomposeunicode = true
 	autocrlf = input
 	ignorecase = false
+	# Make `git rebase` safer on macOS
+	# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+	trustctime = false
 
 [color]
 	ui = true
+
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+
+[color "status"]
+	added = green
+	changed = yellow
+	untracked = cyan
+
+[apply]
+	# Detect whitespace errors when applying a patch
+	whitespace = fix
 
 [alias]
 	co = checkout
@@ -52,3 +69,7 @@
 
 [push]
 	default = simple
+
+[commit]
+	# https://help.github.com/articles/signing-commits-using-gpg/
+	gpgsign = true
