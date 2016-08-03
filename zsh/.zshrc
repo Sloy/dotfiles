@@ -81,23 +81,19 @@ source $ZSH/oh-my-zsh.sh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
-# Example aliases
+
 alias zshconfig="open ~/.zshrc"
 alias ohmyzsh="open ~/.oh-my-zsh"
 alias j="jump"
 
-export ANDROID_HOME=~/Library/Android/sdk
-export PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$PATH
-
-#Gradle wrapper
-alias gw='./gradlew'
-alias gbuild='./gradlew build'
-alias gtest='./gradlew test'
-alias gclean='./gradlew clean'
-alias gcleanbuild='./gradlew clean build'
-
-# Hidden files in finder
+## Hidden files in Finder
 alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
 alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
 
+## My most used command
 alias meh='echo "¯\_(シ)_/¯" | pbcopy && echo "¯\_(シ)_/¯ copied"'
+#linux: alias meh='echo "¯\_(シ)_/¯" | xclip -selection c && echo "¯\_(シ)_/¯ copied"'
+
+# Paths
+export ANDROID_HOME=~/Library/Android/sdk
+export PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$PATH
