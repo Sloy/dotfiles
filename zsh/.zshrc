@@ -49,7 +49,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git gradle adb colored-man-pages jump alias-tips zsh-syntax-highlighting)
+plugins=(git gradle adb colored-man-pages jump alias-tips zsh-syntax-highlighting sublime atom)
 
 # User configuration
 
@@ -82,8 +82,8 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 
-alias zshconfig="open ~/.zshrc"
-alias ohmyzsh="open ~/.oh-my-zsh"
+alias zshconfig="st ~/.zshrc"
+alias ohmyzsh="st ~/.oh-my-zsh"
 alias reload!='. ~/.zshrc'
 alias cls='clear'
 alias j="jump"
@@ -92,6 +92,14 @@ alias j="jump"
 alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
 alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
 
+## Gradle 
+alias gw='./gradlew'
+alias gbuild='./gradlew build'
+alias gtest='./gradlew test'
+alias gclean='./gradlew clean'
+alias gcleanbuild='./gradlew clean build'
+alias gradleconfig="open ~/.gradle/gradle.properties"
+
 ## My most used command
 alias meh='echo "¯\_(シ)_/¯" | pbcopy && echo "¯\_(シ)_/¯ copied"'
 #linux: alias meh='echo "¯\_(シ)_/¯" | xclip -selection c && echo "¯\_(シ)_/¯ copied"'
@@ -99,3 +107,5 @@ alias meh='echo "¯\_(シ)_/¯" | pbcopy && echo "¯\_(シ)_/¯ copied"'
 # Paths
 export ANDROID_HOME=~/Library/Android/sdk
 export PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$PATH
+
+RPROMPT='$(date +%T)'
