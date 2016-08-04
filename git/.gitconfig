@@ -70,7 +70,7 @@
 	remotes = remote -v
 
 	# Interactive rebase with the given number of latest commits
-	reb = "!r() { git rebase -i HEAD~$1; }; r"
+	ri = "!r() { git rebase -i HEAD~$1; }; r"
 
 	# Find tags containing commit
 	ft = "!f() { git describe --always --contains $1; }; f"
