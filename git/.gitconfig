@@ -81,6 +81,9 @@
 	# List contributors with number of commits
 	contributors = shortlog --summary --numbered
 
+	# Prints the body of all merges into develop since last tag (PR title when used with GitHub)
+	changelog = "!f() { git describe --abbrev=0 | xargs -I {} git log {}..HEAD --merges --first-parent --format=%b; }; f"
+
 [push]
 	default = simple
 
