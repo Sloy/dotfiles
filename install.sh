@@ -34,3 +34,10 @@ createSymlink $DOTFILES_DIR/git/.gitignore_global ~/.gitignore_global
 # zsh
 createSymlink $DOTFILES_DIR/zsh/.zshrc ~/.zshrc
 createSymlink $DOTFILES_DIR/zsh/.zsh ~/.zsh
+
+# Download powerlevel9k oh-my-zsh theme if not exists, update otherwise
+[ -d ~/.oh-my-zsh/custom/themes/powerlevel9k ] && \
+  # exists
+  git -C ~/.oh-my-zsh/custom/themes/powerlevel9k pull || \
+  # doesn't exist
+  git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
