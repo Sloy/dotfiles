@@ -22,7 +22,7 @@ mkdir -p ~/dotfiles_old
 
 # Symlink and report creation of link
 createSymlink() {
-  mv $2 ~/dotfiles_old/
+  mv $2 ~/dotfiles_old/ &> /dev/null
   ln -sfn $1 $2
   echo "Symlinked ${1} -> ${2}"
 }
