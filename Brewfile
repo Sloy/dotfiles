@@ -8,6 +8,7 @@ brew 'git-flow'
 brew 'jq'
 brew 'nano'
 brew 'python'
+brew 'python3'
 brew 'wget'
 
 cask 'atom'
