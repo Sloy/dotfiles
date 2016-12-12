@@ -89,3 +89,6 @@
 
 [push]
 	default = simple
+[diff]
+	indentHeuristic = on
+	compactionHeuristic = on
