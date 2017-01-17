@@ -24,6 +24,17 @@ alias gtest='./gradlew test'
 alias gclean='./gradlew clean'
 alias gcleanbuild='./gradlew clean build'
 alias gradleconfig="open ~/.gradle/gradle.properties"
+function taskTree() {
+  # https://github.com/dorongold/gradle-task-tree
+  if [ "$1" != "" ]
+  then
+    echo "Generating tree for task: $1"
+    gw "$1" taskTree --no-repeat -q > taskTree.txt && open taskTree.txt
+    echo "Done!"
+  else
+    echo "You must provide a task as argument"
+  fi
+}
 
 ## My most used command
 alias meh='echo "¯\_(シ)_/¯" | pbcopy && echo "¯\_(シ)_/¯ copied"'
