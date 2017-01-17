@@ -82,7 +82,7 @@
 	contributors = shortlog --summary --numbered
 
 	# Prints the body of all commits since last tag (PR title when used with GitHub merge&squash)
-	changelog = "!f() { git describe --abbrev=0 | xargs -I {} git log {}..HEAD --format=%s; }; f"
+	changelog = "!f() { git describe --abbrev=0 --tags | xargs -I {} git log {}..HEAD --format=%s; }; f"
 
 	# Push tags and master after preparing a release
 	release = "!f() { git push --tags && git push origin master; }; f"
