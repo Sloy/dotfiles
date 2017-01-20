@@ -36,6 +36,9 @@ function taskTree() {
   fi
 }
 
+## Application shortcuts
+alias stree='open -a SourceTree' # Prefer installing the command tools instead
+
 ## My most used command
 alias meh='echo "¯\_(シ)_/¯" | pbcopy && echo "¯\_(シ)_/¯ copied"'
 #linux: alias meh='echo "¯\_(シ)_/¯" | xclip -selection c && echo "¯\_(シ)_/¯ copied"'
