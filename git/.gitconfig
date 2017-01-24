@@ -55,6 +55,9 @@
 	# Deletes a branch locally and remotely (forced)
   nuke = !sh -c 'git branch -D $1 && git push origin :$1' -
 
+	# Force delete all local branches except master
+	deletebranches = "!f() { git branch | grep -v \"master\" | xargs git branch -D; }; f"
+
 	# Commits current changes with a "WIP" message
 	wip = commit -a -m "WIP"
 
