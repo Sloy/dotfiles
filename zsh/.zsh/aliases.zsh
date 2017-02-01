@@ -38,6 +38,7 @@ function taskTree() {
 
 ## Application shortcuts
 alias stree='open -a SourceTree' # Prefer installing the command tools instead
+alias androidstudio="open -a /Applications/Android\ Studio.app"
 
 ## My most used command
 alias meh='echo "¯\_(シ)_/¯" | pbcopy && echo "¯\_(シ)_/¯ copied"'
