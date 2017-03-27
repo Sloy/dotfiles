@@ -41,19 +41,19 @@
 	graph = log --graph --pretty=oneline --abbrev-commit
 
 	# Amends last commit with the index skipping the message editting
-  amend = commit --amend --no-edit
+  	amend = commit --amend --no-edit
 
 	# Destroys all tracked and untracked changes
-  fire = "!f() { git reset --hard; git clean -f -d; }; f"
+  	fire = "!f() { git reset --hard; git clean -f -d; }; f"
 
 	# Deletes local merged branches except for master and develop
-  bclean = "!git branch --merged | grep -v \"*\" | grep -v master | grep -v develop | xargs -n 1 git branch -d"
+  	bclean = "!git branch --merged | grep -v \"*\" | grep -v master | grep -v develop | xargs -n 1 git branch -d"
 
 	# Deletes local merged branches (bclean) and branches remote references to deleted branches
-  roomba = "!f() { git fetch --prune; git bclean ; }; f"
+  	roomba = "!f() { git fetch --prune; git bclean ; }; f"
 
 	# Deletes a branch locally and remotely (forced)
-  nuke = !sh -c 'git branch -D $1 && git push origin :$1' -
+  	nuke = !sh -c 'git branch -D $1 && git push origin :$1' -
 
 	# Force delete all local branches except master
 	deletebranches = "!f() { git branch | grep -v \"master\" | xargs git branch -D; }; f"
