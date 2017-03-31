@@ -78,6 +78,9 @@
 	# Interactive rebase with the given number of latest commits
 	ri = "!r() { git rebase -i HEAD~$1; }; r"
 
+	# Interactive rebase from master to the current commit
+	ribranch = "!r() { git rebase -i $(git merge-base master HEAD); }; r"
+
 	# Find tags containing commit
 	ft = "!f() { git describe --always --contains $1; }; f"
 
