@@ -70,6 +70,9 @@
 	# Pushes the current branch to a new remote branch in origin and track it
 	pushr = "!f() { git rev-parse --abbrev-ref HEAD | xargs git push -u origin; }; f"
 
+	# Pulls the master branch and leaves you in the current branch
+	pullmaster = "!f() { git checkout master && git pull && git checkout -; }; f"
+
 	# Show verbose output about tags, branches or remotes
 	tags = tag -l
 	branches = branch -a
