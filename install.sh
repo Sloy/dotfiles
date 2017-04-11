@@ -47,3 +47,16 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
   git -C ~/.oh-my-zsh/custom/themes/powerlevel9k pull || \
   # doesn't exist
   git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+
+# Powerline fonts
+# clone
+git clone https://github.com/powerline/fonts.git
+# install
+cd fonts
+./install.sh
+# clean-up a bit
+cd ..
+rm -rf fonts
+
+# Terminal theme
+open ./terminal/Chalk.terminal
