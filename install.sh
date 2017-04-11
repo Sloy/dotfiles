@@ -41,6 +41,9 @@ createSymlink $DOTFILES_DIR/zsh/.zsh ~/.zsh
 # oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
+# zsh syntax highlighting
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
 # Download powerlevel9k oh-my-zsh theme if not exists, update otherwise
 [ -d ~/.oh-my-zsh/custom/themes/powerlevel9k ] && \
   # exists
