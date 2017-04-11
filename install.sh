@@ -35,6 +35,12 @@ createSymlink $DOTFILES_DIR/git/.gitignore_global ~/.gitignore_global
 createSymlink $DOTFILES_DIR/zsh/.zshrc ~/.zshrc
 createSymlink $DOTFILES_DIR/zsh/.zsh ~/.zsh
 
+# brew
+./homebrew/install.sh
+
+# oh-my-zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
 # Download powerlevel9k oh-my-zsh theme if not exists, update otherwise
 [ -d ~/.oh-my-zsh/custom/themes/powerlevel9k ] && \
   # exists
