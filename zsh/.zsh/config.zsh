@@ -11,8 +11,6 @@ DEFAULT_USER="rafa"
 
 source $ZSH/oh-my-zsh.sh
 
-source /usr/local/bin/aws_zsh_completer.sh
-
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 POWERLEVEL9K_DIR_HOME_FOREGROUND="white"
 POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND="white"
