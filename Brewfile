@@ -12,6 +12,7 @@ brew 'python'
 brew 'python3'
 brew 'wget'
 
+cask '1password'
 cask 'atom'
 cask 'charles'
 cask 'cyberduck'
