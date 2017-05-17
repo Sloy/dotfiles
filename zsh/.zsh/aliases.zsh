@@ -37,7 +37,7 @@ function taskTree() {
 }
 
 ## Application shortcuts
-alias stree='open -a SourceTree' # Prefer installing the command tools instead
+alias stree='git rev-parse --show-toplevel | xargs open -a SourceTree' # Prefer installing the command tools instead
 alias androidstudio="open -a /Applications/Android\ Studio.app"
 
 ## My most used command
