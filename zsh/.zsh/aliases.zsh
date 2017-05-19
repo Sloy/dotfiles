@@ -10,8 +10,10 @@ alias localrc="if [[ -a ~/.localrc ]]; then ${EDITOR} ~/.localrc; fi"
 alias ohmyzsh="st ~/.oh-my-zsh"
 alias reload!='. ~/.zshrc'
 
+# terminal tricks
 alias cls='clear'
 alias j="jump"
+alias cpdir="cp -R"
 
 ## Hidden files in Finder
 alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
