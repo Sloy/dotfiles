@@ -19,10 +19,6 @@ alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall F
 
 ## Gradle
 alias gw='./gradlew'
-alias gbuild='./gradlew build'
-alias gtest='./gradlew test'
-alias gclean='./gradlew clean'
-alias gcleanbuild='./gradlew clean build'
 alias gradleconfig="open ~/.gradle/gradle.properties"
 function taskTree() {
   # https://github.com/dorongold/gradle-task-tree
