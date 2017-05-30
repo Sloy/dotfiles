@@ -41,3 +41,6 @@ alias androidstudio="open -a /Applications/Android\ Studio.app"
 ## My most used command
 alias meh='echo "¯\_(シ)_/¯" | pbcopy && echo "¯\_(シ)_/¯ copied"'
 #linux: alias meh='echo "¯\_(シ)_/¯" | xclip -selection c && echo "¯\_(シ)_/¯ copied"'
+
+## Dotfiles self-awareness (aka skynet)
+alias dotfiles='atom ~/dotfiles && cd ~/dotfiles'
