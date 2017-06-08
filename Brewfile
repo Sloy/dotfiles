@@ -11,6 +11,7 @@ brew 'micro'
 brew 'nano'
 brew 'python'
 brew 'python3'
+brew 'tig'
 brew 'wget'
 
 cask '1password'
