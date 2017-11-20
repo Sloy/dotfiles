@@ -81,6 +81,8 @@
 	# Interactive rebase with the given number of latest commits
 	ri = "!r() { git rebase -i HEAD~$1; }; r"
 
+	rc = "rebase --continue"
+
 	# Interactive rebase from master to the current commit
 	ribranch = "!r() { git rebase -i $(git merge-base master HEAD); }; r"
 
