@@ -103,3 +103,5 @@
 [diff]
 	indentHeuristic = on
 	compactionHeuristic = on
+[pager]
+	branch = false
