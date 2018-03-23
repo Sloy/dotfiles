@@ -33,6 +33,7 @@
 [alias]
 	co = checkout
 	ci = commit
+	cim = commit -m
 	st = status
 	br = branch
 	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
