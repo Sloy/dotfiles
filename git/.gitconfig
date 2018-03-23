@@ -87,6 +87,9 @@
 	# Interactive rebase from master to the current commit
 	ribranch = "!r() { git rebase -i $(git merge-base master HEAD); }; r"
 
+	# Squash the current branch into 1 commit since the first common ancestor of master
+	squashbranch = "!r() { CUR=`git rev-parse HEAD`; git reset --soft $(git merge-base master HEAD); git commit -m \"$(git log --format=%B ${1}..${CUR})\"; }; r"
+
 	# Find tags containing commit
 	ft = "!f() { git describe --always --contains $1; }; f"
 
