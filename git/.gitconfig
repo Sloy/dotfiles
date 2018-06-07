@@ -105,6 +105,9 @@
 	# Push tags and master after preparing a release
 	release = "!f() { git push --tags && git push origin master; }; f"
 
+	# Discard the local branch and reset it to the remote tracked one. Useful for updating rebased branches.
+	fenix = "!f() { git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD) | xargs -I {} git reset --hard {}; }; f"
+
 [push]
 	default = simple
 [diff]
