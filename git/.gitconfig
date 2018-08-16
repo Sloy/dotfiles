@@ -50,6 +50,9 @@
 	# Deletes local merged branches except for master and develop
   	bclean = "!git branch --merged | grep -v \"*\" | grep -v master | grep -v develop | xargs -n 1 git branch -d"
 
+	# Deletes local branches whose remote is gone. Doesn't include local-only branches. Similar to bclean, but works with squashed branches
+	  localprune = "!f() { git fetch -p && for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done; }; f"
+
 	# Deletes local merged branches (bclean) and branches remote references to deleted branches
   	roomba = "!f() { git fetch --prune; git bclean ; }; f"
 
