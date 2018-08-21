@@ -46,7 +46,7 @@
 	# Destroys all tracked and untracked changes
 	fire = "!f() { git reset --hard; git clean -f -d; }; f"
 	# Deletes local merged branches (bclean) and branches remote references to deleted branches
-  roomba = "!f() { git fetch --prune; git bclean ; }; f"
+  roomba = "!f() { git localprune; }; f"
 	# Amends last commit with the index skipping the message editting
 	amend = commit --amend --no-edit
 	# Commits current changes with a "WIP" message
