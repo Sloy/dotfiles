@@ -7,7 +7,7 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 
 plugins=(git adb colored-man-pages jump alias-tips zsh-syntax-highlighting sublime atom)
 
-DEFAULT_USER="rafa"
+DEFAULT_USER=$(whoami)
 
 source $ZSH/oh-my-zsh.sh
 
