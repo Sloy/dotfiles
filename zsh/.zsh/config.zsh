@@ -18,3 +18,8 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(time)
 
 # Gradle completion https://github.com/gradle/gradle-completion
 fpath=($HOME/.zsh/gradle-completion $fpath)
+
+# Fzf https://github.com/junegunn/fzf#using-homebrew-or-linuxbrew
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+## add support for ctrl+o to open selected file in VS Code
+export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(code {})+abort'"

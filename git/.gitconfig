@@ -94,3 +94,6 @@
 	compactionHeuristic = on
 [pager]
 	branch = false
+	# https://github.com/so-fancy/diff-so-fancy
+	diff = diff-so-fancy | less --tabs=4 -RFX
+	show = diff-so-fancy | less --tabs=4 -RFX
