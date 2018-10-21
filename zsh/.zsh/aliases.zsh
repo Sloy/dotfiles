@@ -35,6 +35,9 @@ function taskTree() {
   fi
 }
 
+# npm
+alias npmr='npm run'
+
 ## Application shortcuts
 alias stree='git rev-parse --show-toplevel | xargs open -a SourceTree' # Prefer installing the command tools instead
 alias androidstudio="open -a /Applications/Android\ Studio.app"
