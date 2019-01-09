@@ -19,7 +19,6 @@ brew 'tig'
 brew 'wget'
 
 cask '1password'
-cask 'atom'
 cask 'charles'
 cask 'cyberduck'
 cask 'firefox'
