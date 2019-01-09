@@ -37,6 +37,7 @@
 	cim = commit -m
 	st = status
 	br = branch
+	cp = cherry-pick
 	graph = log --graph --pretty=oneline --abbrev-commit
 	tags = tag -l
 	branches = branch -a
