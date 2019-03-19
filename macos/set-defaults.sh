@@ -182,16 +182,24 @@ defaults write com.apple.dock tilesize -int 32
 # Wipe all (default) app icons from the Dock
 # This is only really useful when setting up a new Mac, or if you don’t use
 # the Dock to launch apps.
-#defaults write com.apple.dock persistent-apps -array
+defaults write com.apple.dock persistent-apps -array
+
+# Don't show recently used applications in the Dock
+defaults write com.Apple.Dock show-recents -bool false
 
 ###############################################################################
 # Spotlight                                                                   #
 ###############################################################################
 
+# Hide Spotlight tray-icon (and subsequent helper)
+#sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
+## DOESN'T WORK IN MOJAVE
+
 # Disable Spotlight indexing for any volume that gets mounted and has not yet
 # been indexed before.
-# Use `sudo mdutil -i off "/Volumes/foo"` to stop indexing any volume.
-sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
+#Use `sudo mdutil -i off "/Volumes/foo"` to stop indexing any volume.
+#sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
+## DOESN'T WORK IN MOJAVE
 
 # Change indexing order and disable some search results
 # Yosemite-specific search results (remove them if you are using macOS 10.9 or older):
@@ -291,5 +299,9 @@ defaults write org.m0k.transmission WarningLegal -bool false
 # Source: https://giuliomac.wordpress.com/2014/02/19/best-blocklist-for-transmission/
 defaults write org.m0k.transmission BlocklistURL -string "http://john.bitsurge.net/public/biglist.p2p.gz"
 defaults write org.m0k.transmission BlocklistAutoUpdate -bool true
+
+for app in "Address Book" "Calendar" "Contacts" "Dock" "Finder" "Mail" "Safari" "SystemUIServer" "iCal"; do
+  killall "${app}" &> /dev/null
+done
 
 echo "Done. Note that some of these changes require a logout/restart to take effect."
