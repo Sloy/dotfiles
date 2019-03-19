@@ -79,8 +79,8 @@ defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 defaults write -g ApplePressAndHoldEnabled -bool false
 
 # Set a blazingly fast keyboard repeat rate
-defaults write NSGlobalDomain InitialKeyRepeat -int 25
-defaults write NSGlobalDomain KeyRepeat -float 0.1
+defaults write NSGlobalDomain InitialKeyRepeat -int 15
+defaults write NSGlobalDomain KeyRepeat -float 2
 defaults write NSGlobalDomain com.apple.keyboard.fnState -int 1
 
 # Disable auto-correct
