@@ -68,6 +68,9 @@ defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 # Menu bar: show battery percentage
 defaults write com.apple.menuextra.battery ShowPercent YES
 
+# Menu bar: show date in the clock
+defaults write com.apple.menuextra.clock DateFormat -string "EEE d MMM HH:mm"
+
 ###############################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
 ###############################################################################
