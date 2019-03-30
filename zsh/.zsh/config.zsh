@@ -5,7 +5,7 @@ export EDITOR=vim
 #ZSH_THEME="agnoster"
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
-plugins=(git adb colored-man-pages jump alias-tips zsh-syntax-highlighting sublime atom)
+plugins=(git adb colored-man-pages jump zsh-syntax-highlighting sublime)
 
 DEFAULT_USER=$(whoami)
 
