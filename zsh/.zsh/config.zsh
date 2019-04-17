@@ -23,3 +23,7 @@ fpath=($HOME/.zsh/gradle-completion $fpath)
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 ## add support for ctrl+o to open selected file in VS Code
 export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(code {})+abort'"
+
+# Git in English, please
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
