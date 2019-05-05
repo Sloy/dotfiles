@@ -49,8 +49,5 @@ alias meh='echo "¯\_(シ)_/¯" | pbcopy && echo "¯\_(シ)_/¯ copied"'
 ## Dotfiles self-awareness (aka skynet)
 alias dotfiles='code ~/dotfiles && cd ~/dotfiles'
 
-## Overrides
-alias cat='bat'
-
 # Fzf + bat https://remysharp.com/2018/08/23/cli-improved
 alias preview="fzf --preview 'bat --color \"always\" {}'"
