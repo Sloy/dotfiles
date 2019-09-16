@@ -33,6 +33,7 @@
 [alias]
 	## SHORT ALIASES
 	co = checkout
+	sw = switch
 	ci = commit
 	cim = commit -m
 	st = status
