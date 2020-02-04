@@ -37,6 +37,7 @@
 	ci = commit
 	cim = commit -m
 	st = status
+	br = branch
 	cp = cherry-pick
 	graph = log --graph --pretty=oneline --abbrev-commit
 	tags = tag -l
@@ -45,7 +46,7 @@
 
 	## SIMPLE COMMANDS
 	# Show local branches ordered by last commit date (thanks to https://twitter.com/viktorklang/status/1214898430964838400):
-	br = "for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/heads"
+	brs = "for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/heads"
 	# Destroys all tracked and untracked changes
 	fire = "!f() { git reset --hard; git clean -f -d; }; f"
 	# Deletes local merged branches (bclean) and branches remote references to deleted branches
