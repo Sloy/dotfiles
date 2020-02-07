@@ -51,3 +51,17 @@ alias dotfiles='code ~/dotfiles && cd ~/dotfiles'
 
 # Fzf + bat https://remysharp.com/2018/08/23/cli-improved
 alias preview="fzf --preview 'bat --color \"always\" {}'"
+
+function androidAnimationsOn() {
+  adb shell settings put global window_animation_scale 1.0
+  adb shell settings put global transition_animation_scale 1.0
+  adb shell settings put global animator_duration_scale 1.0
+  echo "Done!"
+}
+
+function androidAnimationsOff() {
+  adb shell settings put global window_animation_scale 0.0
+  adb shell settings put global transition_animation_scale 0.0
+  adb shell settings put global animator_duration_scale 0.0
+  echo "Done!"
+}
