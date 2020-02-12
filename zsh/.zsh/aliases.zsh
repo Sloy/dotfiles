@@ -65,3 +65,10 @@ function androidAnimationsOff() {
   adb shell settings put global animator_duration_scale 0.0
   echo "Done!"
 }
+
+function androidAnimationsSlow() {
+  adb shell settings put global window_animation_scale 5.0
+  adb shell settings put global transition_animation_scale 5.0
+  adb shell settings put global animator_duration_scale 5.0
+  echo "Done!"
+}
