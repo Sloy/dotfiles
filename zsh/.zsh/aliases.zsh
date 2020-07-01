@@ -29,7 +29,7 @@ function taskTree() {
   if [ "$1" != "" ]
   then
     echo "Generating tree for task: $1"
-    gw "$1" taskTree --no-repeat -q > taskTree.txt && open taskTree.txt
+    gw "$1" taskTree --no-repeat -q | st
     echo "Done!"
   else
     echo "You must provide a task as argument"
