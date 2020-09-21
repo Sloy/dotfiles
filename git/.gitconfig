@@ -94,6 +94,8 @@
 
 [push]
 	default = simple
+[pull]
+	ff = only
 [diff]
 	indentHeuristic = on
 	compactionHeuristic = on
