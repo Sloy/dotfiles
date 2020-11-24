@@ -32,7 +32,7 @@
 
 [alias]
 	## SHORT ALIASES
-	co = checkout
+	#co = checkout # Disabled, so I'm forced to get used to "sw"
 	sw = switch
 	ci = commit
 	cim = commit -m
@@ -75,7 +75,7 @@
 	# Pushes the current branch to a new remote branch in origin and track it
 	pushr = "!f() { git rev-parse --abbrev-ref HEAD | xargs git push -u origin; }; f"
 	# Pulls the master branch and leaves you in the current branch
-	pullmaster = "!f() { git checkout master && git pull && git checkout -; }; f"
+	pullmaster = "!f() { git switch master && git pull && git switch -; }; f"
 	# Pulls the master branch and rebases the current branch on top of it
 	rebmaster = "!f() { git pullmaster && git rebase master; }; f"
 	# Interactive rebase from master to the current commit
