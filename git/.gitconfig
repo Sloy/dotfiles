@@ -34,6 +34,7 @@
 	## SHORT ALIASES
 	#co = checkout # Disabled, so I'm forced to get used to "sw"
 	sw = switch
+	swd = switch --detach
 	ci = commit
 	cim = commit -m
 	st = status
