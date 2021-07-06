@@ -76,3 +76,5 @@ function androidAnimationsSlow() {
 
 alias androidTouchPointerShow="adb shell content insert --uri content://settings/system --bind name:s:show_touches --bind value:i:1"
 alias androidTouchPointerHide="adb shell content insert --uri content://settings/system --bind name:s:show_touches --bind value:i:0"
+
+alias deleteEmptyDirectories="find . -type d -empty -delete"
