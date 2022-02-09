@@ -20,3 +20,7 @@ fi
 
 # Fix for Android Emulator messing with bluetooth audio
 export QEMU_AUDIO_DRV=none
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="~/.sdkman"
+[[ -s "~/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/rafael.vazquez/.sdkman/bin/sdkman-init.sh"
