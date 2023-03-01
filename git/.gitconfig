@@ -5,7 +5,7 @@
 [core]
 	excludefile = ~/.gitignore
 	excludesfile = ~/.gitignore_global
-	editor = micro
+	editor = nano
 	precomposeunicode = true
 	autocrlf = input
 	ignorecase = false
