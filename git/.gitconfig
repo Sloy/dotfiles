@@ -55,7 +55,7 @@
 	# Amends last commit with the index skipping the message editting
 	amend = commit --amend --no-edit
 	# Commits current changes with a "WIP" message
-	wip = commit -a -m "WIP"
+	wip = commit -a -m "WIP" --no-verify
 	# Soft resets last commit (reverses the command wip)
 	unwip = reset --soft HEAD^
 	# Forced push variant that checks for unknown changes in remote
