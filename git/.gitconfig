@@ -2,6 +2,10 @@
 	name = Rafa Vázquez
 	email = rafa.vazsan@gmail.com
 
+[includeIf "gitdir:~/ShadowMosses/work/"]
+    path = ~/ShadowMosses/work/.gitconfig
+
+
 [core]
 	excludefile = ~/.gitignore
 	excludesfile = ~/.gitignore_global
