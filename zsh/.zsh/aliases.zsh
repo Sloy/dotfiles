@@ -8,15 +8,7 @@ alias lh="ls -ld .*" # List hidden files only
 alias lr="ls -tRFh"  # List recursively
 
 # zsh
-alias zshconfig="st ~/.zsh"
-alias localrc="if [[ -a ~/.localrc ]]; then ${EDITOR} ~/.localrc; fi"
-alias ohmyzsh="st ~/.oh-my-zsh"
 alias reload!='. ~/.zshrc'
-
-# terminal tricks
-alias cls='clear'
-alias j="jump"
-alias cpdir="cp -R"
 
 ## Hidden files in Finder
 alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
@@ -42,19 +34,8 @@ function taskTree() {
 # npm
 alias npmr='npm run'
 
-## Application shortcuts
-alias stree='git rev-parse --show-toplevel | xargs open -a SourceTree' # Prefer installing the command tools instead
-alias androidstudio="open -a /Applications/Android\ Studio.app"
-
-## My most used command
-alias meh='echo "¯\_(シ)_/¯" | pbcopy && echo "¯\_(シ)_/¯ copied"'
-#linux: alias meh='echo "¯\_(シ)_/¯" | xclip -selection c && echo "¯\_(シ)_/¯ copied"'
-
 ## Dotfiles self-awareness (aka skynet)
 alias dotfiles='code ~/dotfiles && cd ~/dotfiles'
-
-# Fzf + bat https://remysharp.com/2018/08/23/cli-improved
-alias preview="fzf --preview 'bat --color \"always\" {}'"
 
 function androidAnimationsOn() {
   adb shell settings put global window_animation_scale 1.0
