@@ -80,5 +80,10 @@ function androidAnimationsSlow() {
 alias androidTouchPointerShow="adb shell content insert --uri content://settings/system --bind name:s:show_touches --bind value:i:1"
 alias androidTouchPointerHide="adb shell content insert --uri content://settings/system --bind name:s:show_touches --bind value:i:0"
 alias androidPaste="adb shell input text $(pbpaste)"
+alias androidFontSize1="adb shell settings put system font_scale 1.0"
+alias androidFontSize085="adb shell settings put system font_scale 0.85"
+alias androidFontSize115="adb shell settings put system font_scale 1.15"
+alias androidFontSize130="adb shell settings put system font_scale 1.30"
+alias androidFixEmulatorDate="adb shell su root date $(date +%m%d%H%M%Y.%S)"
 
 alias deleteEmptyDirectories="find . -type d -empty -delete"
