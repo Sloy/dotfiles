@@ -58,6 +58,27 @@ function androidAnimationsSlow() {
   echo "Done!"
 }
 
+function androidScreenshot() {
+  # https://twitter.com/phileynick/status/1688922792887209985
+
+  adb devices | tail -n +2 | while read line
+  do
+      deviceId=$(echo $line | awk '{print $1}')
+      if [ -z "${deviceId}" ]; then
+          continue
+      fi
+      if [[ $line == *"emulator"* ]]
+      then
+          deviceName=$deviceId
+      else
+          deviceName=$(echo $line | awk -F "device:" '{print $2}' | awk '{print $1}')
+      fi
+      echo "Capturing screenshot from device $deviceName"
+      timestamp=$(date +"%Y-%m-%d at %H.%M.%S")
+      filename="$deviceName - $timestamp.png"
+      adb -s $deviceId exec-out screencap -p > "$HOME/Downloads/$filename"
+  done
+}
 alias androidTouchPointerShow="adb shell content insert --uri content://settings/system --bind name:s:show_touches --bind value:i:1"
 alias androidTouchPointerHide="adb shell content insert --uri content://settings/system --bind name:s:show_touches --bind value:i:0"
 alias androidPaste="adb shell input text $(pbpaste)"
