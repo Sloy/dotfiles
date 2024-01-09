@@ -89,3 +89,12 @@ alias androidFontSize130="adb shell settings put system font_scale 1.30"
 alias androidFixEmulatorDate="adb shell su root date $(date +%m%d%H%M%Y.%S)"
 
 alias deleteEmptyDirectories="find . -type d -empty -delete"
+
+function androidTalkBackToggle(){
+  output=$(adb shell settings get secure enabled_accessibility_services)
+  if [[ "$output" == "com.android.talkback/com.google.android.marvin.talkback.TalkBackService" ]]; then
+    adb shell settings put secure enabled_accessibility_services com.google.android.marvin.talkback/com.google.android.marvin.talkback.TalkBackService
+  else
+    adb shell settings put secure enabled_accessibility_services com.android.talkback/com.google.android.marvin.talkback.TalkBackService
+  fi
+}
