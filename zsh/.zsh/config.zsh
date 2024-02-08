@@ -40,7 +40,7 @@ fi
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # My custom Charles Proxy helper
-source $HOME/dotfiles/proxy/alias.zsh
+source $HOME/dotfiles/proxy/prox.sh
 
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
