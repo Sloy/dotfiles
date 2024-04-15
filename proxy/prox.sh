@@ -2,7 +2,6 @@ prox() {
     main() {
         if [[ "$1" == "none" ]]; then
             echo -e "Reverting proxy\n"
-            #"$HOME/dotfiles/proxy/install_certificate_emulator.sh" revertProxy _ _
             revertProxy
         elif [[ "$1" == "new" && -n "$2" ]]; then
             new_config_file="$HOME/$2.properties"
@@ -30,7 +29,6 @@ prox() {
                 if [[ "$2" == "-i" ]]; then
                     if [[ -n "$proxyCert" ]]; then
                         echo -e "Installing certificate \033[1;4m$(basename "$proxyCert")\033[0m and enabling proxy on port \033[1;4m$port\033[0m"
-                        #"$HOME/dotfiles/proxy/install_certificate_emulator.sh" all "$port" "$proxyCert"
                         installCertificate
                     else
                         echo "Error: Certificate path not specified in the configuration file."
@@ -38,7 +36,6 @@ prox() {
                     fi
                 else
                     echo -e "Enabling proxy on port \033[1;4m$port\033[0m\n"
-                    #"$HOME/dotfiles/proxy/install_certificate_emulator.sh" proxy "$port" _
                     overrideProxy
                 fi
             else
