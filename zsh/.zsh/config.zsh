@@ -37,7 +37,9 @@ then
 fi
 
 # Homebrew
-eval "$(/opt/homebrew/bin/brew shellenv)"
+if command -v brew >/dev/null 2>&1; then
+  eval "$(brew shellenv)"
+fi
 
 # My custom Charles Proxy helper
 source $HOME/dotfiles/proxy/prox.sh
