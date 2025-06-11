@@ -1,6 +1,3 @@
-# Path to your oh-my-zsh installation.
-export ZSH=~/.oh-my-zsh
-
 # zsh config location
 export ZSH_CONFIG=$HOME/.zsh
 
