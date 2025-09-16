@@ -1,7 +1,9 @@
 #Git
 alias g="git"
+alias ..="cd .."
 
 # Directory Info
+alias l="la"  # most useful shortcut
 alias ll="ls -lFh"
 alias la="ls -lAFh"  # List all files (inlcuding hidden)
 alias lh="ls -ld .*" # List hidden files only
