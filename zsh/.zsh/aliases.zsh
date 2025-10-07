@@ -110,3 +110,40 @@ function androidTalkBackToggle(){
     adb shell settings put secure enabled_accessibility_services null
   fi
 }
+
+
+# FFmpeg video compression
+function ffcompress() {
+  if [ "$1" = "" ]; then
+    echo "Usage: ffcompress <input_file>"
+    echo "Example: ffcompress 'Screen Recording.mov'"
+    return 1
+  fi
+
+  local input_file="$1"
+
+  # Check if input file exists
+  if [ ! -f "$input_file" ]; then
+    echo "Error: Input file '$input_file' not found"
+    return 1
+  fi
+
+  # Generate output filename by adding '-compressed' before the extension
+  local filename_no_ext="${input_file%.*}"
+  local extension="${input_file##*.}"
+  local output_file="${filename_no_ext}-compressed.mp4"
+
+  echo "Compressing: $input_file"
+  echo "Output: $output_file"
+
+  ffmpeg -i "$input_file" -c:v libx264 -crf 28 -preset medium -an "$output_file"
+
+  if [ $? -eq 0 ]; then
+    echo "Compression completed successfully!"
+    echo "Original: $input_file"
+    echo "Compressed: $output_file"
+  else
+    echo "Compression failed!"
+    return 1
+  fi
+}
