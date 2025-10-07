@@ -97,6 +97,8 @@ alias androidFontSize085="adb shell settings put system font_scale 0.85"
 alias androidFontSize115="adb shell settings put system font_scale 1.15"
 alias androidFontSize130="adb shell settings put system font_scale 1.30"
 alias androidFixEmulatorDate="adb shell su root date $(date +%m%d%H%M%Y.%S)"
+alias androidNavigationGestures="adb shell cmd overlay enable com.android.internal.systemui.navbar.gestural"
+alias androidNavigationButtons="adb shell cmd overlay enable com.android.internal.systemui.navbar.threebutton"
 
 alias deleteEmptyDirectories="find . -type d -empty -delete"
 
