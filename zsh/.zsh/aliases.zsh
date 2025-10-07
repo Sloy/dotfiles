@@ -6,6 +6,7 @@ alias ..="cd .."
 alias l="la"  # most useful shortcut
 alias ll="ls -lFh"
 alias la="ls -lAFh"  # List all files (inlcuding hidden)
+alias lo="ls -lAFhtr"  # List all files ordered by time (most recent at bottom)
 alias lh="ls -ld .*" # List hidden files only
 alias lr="ls -tRFh"  # List recursively
 
