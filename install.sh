@@ -35,9 +35,6 @@ createSymlink $DOTFILES_DIR/git/.gitignore_global ~/.gitignore_global
 createSymlink $DOTFILES_DIR/zsh/.zshrc ~/.zshrc
 createSymlink $DOTFILES_DIR/zsh/.zsh ~/.zsh
 
-# brew
-./homebrew/install.sh
-
 # zsh gradle completion
 git clone git://github.com/eriwen/gradle-completion ~/.zsh/gradle-completion
 
