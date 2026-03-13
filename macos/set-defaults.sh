@@ -9,9 +9,39 @@
 #
 # Run ./set-defaults.sh and you'll be good to go.
 
+applied=()
+skipped=()
+
+print_report() {
+  echo ""
+  echo "=============================="
+  echo " Settings applied (${#applied[@]})"
+  echo "=============================="
+  for item in "${applied[@]}"; do
+    echo "  [+] $item"
+  done
+  echo ""
+  echo "=============================="
+  echo " Settings skipped (${#skipped[@]})"
+  echo "=============================="
+  for item in "${skipped[@]}"; do
+    echo "  [-] $item"
+  done
+  echo ""
+}
+
 confirm() {
-  read -r -p "$1 [Y/n] " response
-  [[ "$response" =~ ^([nN])$ ]] && return 1 || return 0
+  read -r -p "$1 [Y/n/q] " response
+  if [[ "$response" =~ ^([qQ])$ ]]; then
+    print_report
+    exit 0
+  elif [[ "$response" =~ ^([nN])$ ]]; then
+    skipped+=("$1")
+    return 1
+  else
+    applied+=("$1")
+    return 0
+  fi
 }
 
 # Ask for the administrator password upfront
@@ -24,6 +54,7 @@ if [[ ! (-z "$COMPUTER_NAME") ]]; then
 	sudo scutil --set ComputerName "$COMPUTER_NAME"
 	sudo scutil --set HostName "$COMPUTER_NAME"
 	sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$COMPUTER_NAME"
+  applied+=("Set computer name to '$COMPUTER_NAME'")
 fi
 
 confirm "Use AirDrop over every interface" && \
@@ -251,4 +282,5 @@ for app in "Address Book" "Calendar" "Contacts" "Dock" "Finder" "Mail" "Safari" 
   killall "${app}" &> /dev/null
 done
 
-echo "Done. Note that some of these changes require a logout/restart to take effect."
+print_report
+echo "Note: some changes require a logout/restart to take effect."
