@@ -109,6 +109,9 @@ if confirm "Trackpad: enable tap to click"; then
   defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
 fi
 
+confirm "Use three fingers to drag windows" && \
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
+
 confirm "Swipe between full-screen apps with 4 fingers" && \
 defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerHorizSwipeGesture -int 0
 
@@ -219,6 +222,12 @@ defaults write com.apple.dock show-recents -bool false
 #Use `sudo mdutil -i off "/Volumes/foo"` to stop indexing any volume.
 #sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
 ## DOESN'T WORK IN MOJAVE
+
+if confirm "Disable Spotlight keyboard shortcut (Cmd+Space)"; then
+  defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 64 "{ enabled = 0; value = { parameters = ( 65535, 49, 1048576 ); type = standard; }; }"
+  defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 65 "{ enabled = 0; value = { parameters = ( 65535, 49, 1572864 ); type = standard; }; }"
+  /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+fi
 
 if confirm "Configure Spotlight indexing order (apps, system prefs, folders, calculators only)"; then
   defaults write com.apple.spotlight orderedItems -array \
