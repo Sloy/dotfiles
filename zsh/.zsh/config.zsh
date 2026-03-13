@@ -5,9 +5,6 @@ export EDITOR=vim
 # Skips the default user name from the prompt
 DEFAULT_USER=$(whoami)
 
-# Gradle completion https://github.com/gradle/gradle-completion
-fpath=($HOME/.zsh/gradle-completion $fpath)
-
 # Fzf https://github.com/junegunn/fzf#using-homebrew-or-linuxbrew
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 ## add support for ctrl+o to open selected file in VS Code
