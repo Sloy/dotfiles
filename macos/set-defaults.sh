@@ -18,7 +18,8 @@ confirm() {
 sudo -v
 
 # Set computer name (as done via System Preferences → Sharing)
-read -p "Computer name (empty to ignore): " COMPUTER_NAME
+CURRENT_COMPUTER_NAME=$(scutil --get ComputerName)
+read -p "Computer name (current: '$CURRENT_COMPUTER_NAME', empty to ignore): " COMPUTER_NAME
 if [[ ! (-z "$COMPUTER_NAME") ]]; then
 	sudo scutil --set ComputerName "$COMPUTER_NAME"
 	sudo scutil --set HostName "$COMPUTER_NAME"
