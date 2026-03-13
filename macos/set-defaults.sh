@@ -56,12 +56,6 @@ defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 confirm "Automatically quit printer app once the print jobs complete" && \
 defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
 
-confirm "Disable the 'Are you sure you want to open this application?' dialog" && \
-defaults write com.apple.LaunchServices LSQuarantine -bool false
-
-confirm "Remove duplicates in the 'Open With' menu" && \
-/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user
-
 confirm "Set Help Viewer windows to non-floating mode" && \
 defaults write com.apple.helpviewer DevMode -bool true
 
@@ -91,7 +85,7 @@ confirm "Mission Control with 4 fingers" && \
 defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerVertSwipeGesture -int 0
 
 confirm "Enable full keyboard access for all controls (e.g. Tab in modal dialogs)" && \
-defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 2
 
 confirm "Disable press-and-hold for keys in favor of key repeat" && \
 defaults write -g ApplePressAndHoldEnabled -bool false
@@ -108,11 +102,6 @@ defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 ###############################################################################
 # Screen                                                                      #
 ###############################################################################
-
-if confirm "Require password immediately after sleep or screen saver begins"; then
-  defaults write com.apple.screensaver askForPassword -int 1
-  defaults write com.apple.screensaver askForPasswordDelay -int 0
-fi
 
 confirm "Change screenshots location to Downloads folder" && \
 defaults write com.apple.screencapture location -string "~/Downloads"
@@ -184,7 +173,7 @@ confirm "Wipe all default app icons from the Dock" && \
 defaults write com.apple.dock persistent-apps -array
 
 confirm "Don't show recently used applications in the Dock" && \
-defaults write com.Apple.Dock show-recents -bool false
+defaults write com.apple.dock show-recents -bool false
 
 ###############################################################################
 # Spotlight                                                                   #
