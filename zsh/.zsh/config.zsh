@@ -22,9 +22,9 @@ then
   [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 fi
 
-# Homebrew
-if command -v brew >/dev/null 2>&1; then
-  eval "$(brew shellenv)"
+# Homebrew on MacOS ARM
+if command -v /opt/homebrew/bin/brew >/dev/null 2>&1; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 # My custom Charles Proxy helper
