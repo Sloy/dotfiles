@@ -147,3 +147,126 @@ function ffcompress() {
     return 1
   fi
 }
+
+# Git worktree helpers
+function gwt() {
+  local branch="$1"
+
+  if [[ -z "$branch" ]]; then
+    echo "Usage: gwt <branch-name>"
+    return 1
+  fi
+
+  local repo_root
+  repo_root=$(git rev-parse --show-toplevel 2>/dev/null)
+  if [ $? -ne 0 ]; then
+    echo "Error: not inside a git repository"
+    return 1
+  fi
+
+  local repo_name
+  repo_name=$(basename "$repo_root")
+
+  # Sanitize branch name for filesystem (replace / with -)
+  local safe_branch="${branch//\//-}"
+
+  local worktree_path="$(dirname "$repo_root")/${repo_name}-${safe_branch}"
+
+  # If the target directory already exists, handle gracefully
+  if [[ -d "$worktree_path" ]]; then
+    if git worktree list | grep -q "^$worktree_path "; then
+      echo "Worktree already exists at '$worktree_path', switching to it"
+      cd "$worktree_path"
+      return 0
+    else
+      echo "Error: '$worktree_path' already exists but is not a git worktree"
+      return 1
+    fi
+  fi
+
+  # Check if branch exists locally
+  if git show-ref --verify --quiet "refs/heads/$branch"; then
+    echo "Using existing local branch '$branch'"
+    git worktree add "$worktree_path" "$branch"
+  else
+    # Fetch to ensure remote refs are up to date before checking remote
+    echo "Fetching from origin..."
+    git fetch origin
+    # Check if branch exists on remote
+    if git show-ref --verify --quiet "refs/remotes/origin/$branch"; then
+      echo "Tracking remote branch 'origin/$branch'"
+      git worktree add --track -b "$branch" "$worktree_path" "origin/$branch"
+    # Branch doesn't exist anywhere — create it
+    else
+      echo "Creating new branch '$branch'"
+      git worktree add -b "$branch" "$worktree_path"
+    fi
+  fi
+
+  if [ $? -eq 0 ]; then
+    cd "$worktree_path"
+  else
+    echo "Error: failed to create worktree"
+    return 1
+  fi
+}
+
+function gwtrm() {
+  local force=0
+  if [[ "$1" == "-f" ]]; then
+    force=1
+  fi
+
+  local repo_root
+  repo_root=$(git rev-parse --show-toplevel 2>/dev/null)
+  if [ $? -ne 0 ]; then
+    echo "Error: not inside a git repository"
+    return 1
+  fi
+
+  # Get main worktree path (always the first entry in worktree list)
+  local main_worktree
+  main_worktree=$(git worktree list | head -1 | awk '{print $1}')
+
+  # Refuse if called from the main repo
+  if [ "$repo_root" = "$main_worktree" ]; then
+    echo "Error: you are in the main repository, not a worktree"
+    return 1
+  fi
+
+  local current_path="$repo_root"
+  local branch
+  branch=$(git rev-parse --abbrev-ref HEAD)
+
+  if [ $force -eq 0 ]; then
+    # Check for commits not pushed to any remote branch
+    local unpushed
+    unpushed=$(git log HEAD --not --remotes --oneline 2>/dev/null)
+    if [[ -n "$unpushed" ]]; then
+      echo "Error: there are unpushed commits on '$branch':"
+      echo "$unpushed"
+      echo "Push them first, or use 'gwtrm -f' to force delete."
+      return 1
+    fi
+  fi
+
+  # Must cd away before removing the directory we're standing in
+  cd "$main_worktree"
+
+  # Without -f: git refuses if uncommitted changes exist (protects data)
+  # With -f: passes --force to bypass that check too
+  if [ $force -eq 1 ]; then
+    git worktree remove --force "$current_path"
+  else
+    git worktree remove "$current_path"
+  fi
+
+  if [ $? -ne 0 ]; then
+    echo "Error: failed to remove worktree"
+    cd "$current_path"
+    return 1
+  fi
+
+  # Delete the local branch (force delete — safety net is the unpushed-commits check above)
+  git branch -D "$branch"
+}
