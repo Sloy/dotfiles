@@ -274,12 +274,32 @@ function gwt() {
     fi
   fi
 
-  if [ $? -eq 0 ]; then
-    cd "$worktree_path"
-  else
+  if [ $? -ne 0 ]; then
     echo "Error: failed to create worktree"
     return 1
   fi
+
+  # Copy untracked-but-reusable files/dirs from the main repo into the new worktree.
+  # These are typically gitignored but needed to open/build the project.
+  local copy_items=(
+    ".idea"                        # Android Studio/IntelliJ: run configs, code style, inspections
+    "local.properties"             # sdk.dir / ndk.dir — required to build
+    "keystore"                     # signing keystores (gitignored for security)
+    "keystores"                    # alternate common name for the above
+    "app/google-services.json"     # Firebase config (gitignored when contains secrets)
+    "app/src/debug/google-services.json"  # debug-variant Firebase config
+  )
+  for item in "${copy_items[@]}"; do
+    local src="$repo_root/$item"
+    if [[ -e "$src" ]]; then
+      local dest_dir="$worktree_path/$(dirname "$item")"
+      mkdir -p "$dest_dir"
+      cp -r "$src" "$worktree_path/$item"
+      echo "Copied $item"
+    fi
+  done
+
+  cd "$worktree_path"
 }
 
 function gwtrm() {
