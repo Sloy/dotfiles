@@ -138,13 +138,37 @@ function ffcompress() {
 
   ffmpeg -i "$input_file" -c:v libx264 -crf 28 -preset medium -an "$output_file"
 
-  if [ $? -eq 0 ]; then
-    echo "Compression completed successfully!"
-    echo "Original: $input_file"
-    echo "Compressed: $output_file"
-  else
+  if [ $? -ne 0 ]; then
     echo "Compression failed!"
     return 1
+  fi
+
+  local compressed_size
+  compressed_size=$(stat -f%z "$output_file" 2>/dev/null)
+  if [ -z "$compressed_size" ] || [ "$compressed_size" -eq 0 ]; then
+    echo "Error: Output file is empty or missing. Conversion may have failed."
+    return 1
+  fi
+
+  local original_size
+  original_size=$(stat -f%z "$input_file")
+  local reduction=$(( (original_size - compressed_size) * 100 / original_size ))
+
+  echo ""
+  echo "Original:   $(( original_size / 1024 / 1024 )) MB ($original_size bytes)"
+  echo "Compressed: $(( compressed_size / 1024 / 1024 )) MB ($compressed_size bytes)"
+  echo "Reduction:  ${reduction}%"
+  echo ""
+
+  read "reply?Replace original with compressed file? [Y/n] "
+  reply="${reply:-Y}"
+  if [[ "$reply" =~ ^[Yy]$ ]]; then
+    local final_file="${filename_no_ext}.mp4"
+    trash "$input_file"
+    mv "$output_file" "$final_file"
+    echo "Replaced: $final_file"
+  else
+    echo "Kept original. Compressed file: $output_file"
   fi
 }
 
