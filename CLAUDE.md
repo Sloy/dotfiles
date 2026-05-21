@@ -23,6 +23,7 @@ This is a personal dotfiles repository for macOS (zsh). It symlinks configuratio
 - `proxy/prox.sh` — `prox` function for toggling HTTP proxy on Android emulators via adb
 - `git/.gitconfig` — git aliases, diff-so-fancy pager, credential helper
 - `homebrew/Brewfile` — managed packages (bat, fzf, diff-so-fancy, jq, etc.)
+- `raycast/` — Raycast script commands; point Raycast to `~/dotfiles/raycast` in Settings → Extensions → Script Commands
 
 ## Machine-specific config
 
@@ -49,3 +50,14 @@ Add machine-specific overrides to `~/.localrc` — it is sourced automatically i
 - `ffcompress <file>` — compress video with ffmpeg (libx264, crf 28, strips audio)
 - `prox <config> [-i]` / `prox none` — enable/disable Charles proxy on Android emulator; `-i` installs SSL cert
 - `taskTree <task>` — display Gradle task dependency tree
+
+## Raycast scripts (`raycast/`)
+
+Script commands symlinked to `~/.raycast-scripts`. Add that path in Raycast → Settings → Extensions → Script Commands.
+
+| Script | Description |
+|---|---|
+| `talkback-toggle.sh` | Toggle TalkBack accessibility service on connected Android device |
+| `qa-password.sh` | Paste QA test password on connected Android device via adb |
+
+Scripts use a hardcoded `adb` path (`~/Library/Android/sdk/platform-tools/adb`). `qa-password.sh` reads `$QA_PASSWORD` from `~/.localrc` — set it there before use. No symlink needed; point Raycast directly at `~/dotfiles/raycast`.

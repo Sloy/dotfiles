@@ -33,3 +33,13 @@ Installs sdkman (if not present) and Java.
 ```sh
 ./java/install.sh
 ```
+
+### 5. Raycast scripts
+
+Add `~/dotfiles/raycast` as a Script Commands directory in Raycast → Settings → Extensions → Script Commands.
+
+Some scripts require secrets in `~/.localrc`:
+
+```sh
+export QA_PASSWORD="..."
+```
