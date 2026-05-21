@@ -114,29 +114,59 @@ function androidTalkBackToggle(){
 
 # FFmpeg video compression
 function ffcompress() {
-  if [ "$1" = "" ]; then
-    echo "Usage: ffcompress <input_file>"
+  local keep_audio=0
+  local boost_volume=0
+  local volume_multiplier=10
+  local args=()
+  local skip_next=0
+  for arg in "$@"; do
+    if [[ "$skip_next" -eq 1 ]]; then
+      volume_multiplier="$arg"
+      skip_next=0
+    elif [[ "$arg" == "--keep-audio" || "$arg" == "-a" ]]; then
+      keep_audio=1
+    elif [[ "$arg" == "--boost-volume" || "$arg" == "-b" ]]; then
+      boost_volume=1
+      keep_audio=1
+    elif [[ "$arg" =~ ^--boost-volume=(.+)$ || "$arg" =~ ^-b=(.+)$ ]]; then
+      boost_volume=1
+      keep_audio=1
+      volume_multiplier="${match[1]}"
+    else
+      args+=("$arg")
+    fi
+  done
+
+  if [ "${#args[@]}" -eq 0 ]; then
+    echo "Usage: ffcompress <input_file> [-a|--keep-audio] [-b|--boost-volume[=N]]"
     echo "Example: ffcompress 'Screen Recording.mov'"
+    echo "         ffcompress 'Screen Recording.mov' -a"
+    echo "         ffcompress 'Screen Recording.mov' -b"
+    echo "         ffcompress 'Screen Recording.mov' -b=5"
     return 1
   fi
 
-  local input_file="$1"
+  local input_file="${args[1]}"
 
-  # Check if input file exists
   if [ ! -f "$input_file" ]; then
     echo "Error: Input file '$input_file' not found"
     return 1
   fi
 
-  # Generate output filename by adding '-compressed' before the extension
   local filename_no_ext="${input_file%.*}"
   local extension="${input_file##*.}"
   local output_file="${filename_no_ext}-compressed.mp4"
+  local audio_opts=(-an)
+  if [[ "$boost_volume" -eq 1 ]]; then
+    audio_opts=(-af "volume=${volume_multiplier}" -c:a aac)
+  elif [[ "$keep_audio" -eq 1 ]]; then
+    audio_opts=(-c:a aac)
+  fi
 
   echo "Compressing: $input_file"
   echo "Output: $output_file"
 
-  ffmpeg -i "$input_file" -c:v libx264 -crf 28 -preset medium -an "$output_file"
+  ffmpeg -i "$input_file" -c:v libx264 -crf 28 -preset medium "${audio_opts[@]}" "$output_file"
 
   if [ $? -ne 0 ]; then
     echo "Compression failed!"
@@ -154,9 +184,12 @@ function ffcompress() {
   original_size=$(stat -f%z "$input_file")
   local reduction=$(( (original_size - compressed_size) * 100 / original_size ))
 
+  local original_mb=$(awk "BEGIN {printf \"%.1f\", $original_size / 1024 / 1024}")
+  local compressed_mb=$(awk "BEGIN {printf \"%.1f\", $compressed_size / 1024 / 1024}")
+
   echo ""
-  echo "Original:   $(( original_size / 1024 / 1024 )) MB ($original_size bytes)"
-  echo "Compressed: $(( compressed_size / 1024 / 1024 )) MB ($compressed_size bytes)"
+  echo "Original:   ${original_mb} MB ($original_size bytes)"
+  echo "Compressed: ${compressed_mb} MB ($compressed_size bytes)"
   echo "Reduction:  ${reduction}%"
   echo ""
 
