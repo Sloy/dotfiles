@@ -70,6 +70,17 @@ function androidAnimationsSlow() {
 
 function androidScreenshot() {
   # https://twitter.com/phileynick/status/1688922792887209985
+  local delay=0
+  [[ "$1" =~ ^[0-9]+$ ]] && delay=$1
+
+  if [[ "$delay" -gt 0 ]]; then
+    local i=$delay
+    while [[ $i -gt 0 ]]; do
+      echo "Screenshot in $i..."
+      sleep 1
+      (( i-- ))
+    done
+  fi
 
   adb devices | tail -n +2 | while read line
   do
