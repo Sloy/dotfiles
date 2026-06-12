@@ -1,3 +1,10 @@
+# Powerlevel10k instant prompt — only in iTerm2, matching the gate in config.zsh.
+# Must stay near the top of ~/.zshrc; any initialization that may require console
+# input (password prompts, [y/n] confirmations, etc.) must go above this block.
+if [[ "$TERM_PROGRAM" == "iTerm.app" && -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # zsh config location
 export ZSH_CONFIG=$HOME/.zsh
 

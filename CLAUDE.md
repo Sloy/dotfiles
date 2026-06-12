@@ -9,9 +9,10 @@ This is a personal dotfiles repository for macOS (zsh). It symlinks configuratio
 ## Installation
 
 ```bash
-./install.sh          # symlinks dotfiles into $HOME
-./homebrew/install.sh # installs Homebrew + Brewfile packages
+./install.sh           # symlinks dotfiles into $HOME
+./homebrew/install.sh  # installs Homebrew + Brewfile packages
 ./macos/set-defaults.sh # applies macOS system defaults
+./zsh/install-omz.sh   # (optional) oh-my-zsh + powerlevel10k + plugins + Nerd Font (only run on machines where you use iTerm2)
 ```
 
 ## Structure
@@ -28,6 +29,10 @@ This is a personal dotfiles repository for macOS (zsh). It symlinks configuratio
 ## Machine-specific config
 
 Add machine-specific overrides to `~/.localrc` — it is sourced automatically if it exists.
+
+## Oh-my-zsh (iTerm2 only)
+
+`config.zsh` loads oh-my-zsh + powerlevel10k only when `$TERM_PROGRAM == iTerm.app` and `~/.oh-my-zsh` exists. Warp ships its own prompt so OMZ stays out of its way. To enable on a new machine, run `./zsh/install-omz.sh` (installs OMZ, p10k, `zsh-autosuggestions`, `zsh-syntax-highlighting`, and `font-jetbrains-mono-nerd-font`), then run `p10k configure`.
 
 ## Key git aliases (from `.gitconfig`)
 

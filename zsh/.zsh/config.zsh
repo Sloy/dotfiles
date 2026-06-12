@@ -5,6 +5,16 @@ export EDITOR=vim
 # Skips the default user name from the prompt
 DEFAULT_USER=$(whoami)
 
+# Oh-my-zsh — only in iTerm2. Warp ships its own prompt and command UI, so
+# loading OMZ there fights with the host. Install with zsh/install-omz.sh.
+if [[ "$TERM_PROGRAM" == "iTerm.app" && -d "$HOME/.oh-my-zsh" ]]; then
+  export ZSH="$HOME/.oh-my-zsh"
+  ZSH_THEME="powerlevel10k/powerlevel10k"
+  plugins=(zsh-syntax-highlighting zsh-autosuggestions)
+  source "$ZSH/oh-my-zsh.sh"
+  [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+fi
+
 # Fzf https://github.com/junegunn/fzf#using-homebrew-or-linuxbrew
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 ## add support for ctrl+o to open selected file in VS Code
