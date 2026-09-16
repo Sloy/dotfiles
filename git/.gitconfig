@@ -79,9 +79,9 @@
 	# Pushes the current branch to a new remote branch in origin and track it
 	pushr = "!f() { git rev-parse --abbrev-ref HEAD | xargs git push -u origin; }; f"
 	# Pulls the master branch and leaves you in the current branch
-	pullmaster = "!f() { git switch master && git pull && git switch -; }; f"
+	pullmaster = fetch origin master:master
 	# Pulls the master branch and rebases the current branch on top of it
-	rebmaster = "!f() { git pullmaster && git rebase master; }; f"
+	rebmaster = "!f() { git pullmaster && git rebase master --autostash; }; f"
 	# Interactive rebase from master to the current commit
 	ribranch = "!r() { git rebase -i $(git merge-base master HEAD); }; r"
 	# Squash the current branch into 1 commit since the first common ancestor of master
