@@ -68,6 +68,7 @@ Add machine-specific overrides to `~/.localrc` — it is sourced automatically i
 | `and talkback` | `toggle` · `on` · `off` |
 | `and navigation` | `gestures` · `buttons` |
 | `and paste` | — (types the macOS clipboard into the focused field) |
+| `and current-activity` | — (prints the foreground activity's class name) |
 | `and fix-date` | — (needs a rootable image; fails on Play Store AVDs) |
 
 Layout:

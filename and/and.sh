@@ -18,6 +18,7 @@ COMMANDS=(
   "talkback|accessibility screen reader"
   "navigation|gesture or three-button nav bar"
   "paste|type the clipboard into the device"
+  "current-activity|print the foreground activity class"
   "fix-date|sync the emulator clock to the host"
 )
 
@@ -29,7 +30,7 @@ usage() {
   for entry in "${COMMANDS[@]}"; do
     name="${entry%%|*}"
     desc="${entry#*|}"
-    printf '  %-14s %s\n' "$name" "$desc"
+    printf '  %-16s %s\n' "$name" "$desc"
   done
   cat <<'USAGE'
 
@@ -43,6 +44,7 @@ Examples:
   and font-size 1.15
   and animations off
   and talkback toggle
+  and current-activity
 USAGE
 }
 
@@ -58,6 +60,8 @@ canonical() {
     talkback|tb)                          printf 'talkback' ;;
     navigation|nav|navbar)                printf 'navigation' ;;
     paste|clipboard)                      printf 'paste' ;;
+    currentactivity|activity|topactivity|currentfocus)
+                                          printf 'current-activity' ;;
     fixdate|date|fixemulatordate)         printf 'fix-date' ;;
     *) return 1 ;;
   esac
