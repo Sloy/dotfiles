@@ -2,3 +2,4 @@
 .DS_Store
 taskTree.txt
 .claude
+**/.claude/settings.local.json
