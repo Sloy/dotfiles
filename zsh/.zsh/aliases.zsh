@@ -20,6 +20,9 @@ alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall F
 ## Paparazzi
 alias papa="$HOME/dotfiles/paparazzi/papa.sh"
 
+## Android
+alias and="$HOME/dotfiles/and/and.sh"
+
 ## Gradle
 alias gw='./gradlew'
 alias gwstop='./gradlew --stop'
@@ -43,88 +46,7 @@ alias npmr='npm run'
 ## Dotfiles self-awareness (aka skynet)
 alias dotfiles='code ~/dotfiles && cd ~/dotfiles'
 
-function androidAnimationsOn() {
-  adb shell settings put global window_animation_scale 1.0
-  adb shell settings put global transition_animation_scale 1.0
-  adb shell settings put global animator_duration_scale 1.0
-  echo "Done!"
-}
-
-function androidAnimationsFast() {
-  adb shell settings put global window_animation_scale 0.5
-  adb shell settings put global transition_animation_scale 0.5
-  adb shell settings put global animator_duration_scale 0.5
-  echo "Done!"
-}
-
-function androidAnimationsOff() {
-  adb shell settings put global window_animation_scale 0.0
-  adb shell settings put global transition_animation_scale 0.0
-  adb shell settings put global animator_duration_scale 0.0
-  echo "Done!"
-}
-
-function androidAnimationsSlow() {
-  adb shell settings put global window_animation_scale 5.0
-  adb shell settings put global transition_animation_scale 5.0
-  adb shell settings put global animator_duration_scale 5.0
-  echo "Done!"
-}
-
-function androidScreenshot() {
-  # https://twitter.com/phileynick/status/1688922792887209985
-  local delay=0
-  [[ "$1" =~ ^[0-9]+$ ]] && delay=$1
-
-  if [[ "$delay" -gt 0 ]]; then
-    local i=$delay
-    while [[ $i -gt 0 ]]; do
-      echo "Screenshot in $i..."
-      sleep 1
-      (( i-- ))
-    done
-  fi
-
-  adb devices | tail -n +2 | while read line
-  do
-      deviceId=$(echo $line | awk '{print $1}')
-      if [ -z "${deviceId}" ]; then
-          continue
-      fi
-      if [[ $line == *"emulator"* ]]
-      then
-          deviceName=$deviceId
-      else
-          deviceName=$(echo $line | awk -F "device:" '{print $2}' | awk '{print $1}')
-      fi
-      echo "Capturing screenshot from device $deviceName"
-      timestamp=$(date +"%Y-%m-%d at %H.%M.%S")
-      filename="$deviceName - $timestamp.png"
-      adb -s $deviceId exec-out screencap -p > "$HOME/Downloads/$filename"
-  done
-}
-alias androidTouchPointerShow="adb shell content insert --uri content://settings/system --bind name:s:show_touches --bind value:i:1"
-alias androidTouchPointerHide="adb shell content insert --uri content://settings/system --bind name:s:show_touches --bind value:i:0"
-alias androidPaste="adb shell input text $(pbpaste)"
-alias androidFontSize1="adb shell settings put system font_scale 1.0"
-alias androidFontSize085="adb shell settings put system font_scale 0.85"
-alias androidFontSize115="adb shell settings put system font_scale 1.15"
-alias androidFontSize130="adb shell settings put system font_scale 1.30"
-alias androidFixEmulatorDate="adb shell su root date $(date +%m%d%H%M%Y.%S)"
-alias androidNavigationGestures="adb shell cmd overlay enable com.android.internal.systemui.navbar.gestural"
-alias androidNavigationButtons="adb shell cmd overlay enable com.android.internal.systemui.navbar.threebutton"
-
 alias deleteEmptyDirectories="find . -type d -empty -delete"
-
-function androidTalkBackToggle(){
-  output=$(adb shell settings get secure enabled_accessibility_services)
-  if [[ "$output" == "null" ]]; then
-    adb shell settings put secure enabled_accessibility_services com.google.android.marvin.talkback/com.google.android.marvin.talkback.TalkBackService
-  else
-    adb shell settings put secure enabled_accessibility_services null
-  fi
-}
-
 
 # FFmpeg video compression
 function ffcompress() {

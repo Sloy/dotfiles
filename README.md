@@ -43,3 +43,10 @@ Some scripts require secrets in `~/.localrc`:
 ```sh
 export QA_PASSWORD="..."
 ```
+
+## CLI helpers
+
+Both are aliased by `install.sh` via `aliases.zsh` and need [fzf](https://github.com/junegunn/fzf).
+
+- `and` — Android/adb helpers: animation scales, screenshots, font scale, touch pointer, TalkBack, nav bar, clipboard paste, emulator clock. Run bare to pick interactively, or go straight there: `and screenshot now`, `and font-size 1.15`, `and animations off`. `and --help` lists everything.
+- `papa` — record or verify Paparazzi screenshot tests without typing the full Gradle module path.
