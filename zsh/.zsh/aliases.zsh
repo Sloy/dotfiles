@@ -17,22 +17,23 @@ alias reload!='. ~/.zshrc'
 alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
 alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
 
-## Paparazzi
-alias papa="$HOME/dotfiles/paparazzi/papa.sh"
-
 ## Android
-unalias and 2>/dev/null
-and() {
+unalias and papa 2>/dev/null
+# Runs a script and adds the command it resolved to shell history.
+_run_with_history() {
+  local name=$1 script=$2; shift 2
   local out rc resolved
   out=$(mktemp)
-  AND_RESOLVED_FILE=$out "$HOME/dotfiles/and/and.sh" "$@"
+  RESOLVED_CMD_FILE=$out "$script" "$@"
   rc=$?
   resolved=$(<$out)
   rm -f $out
-  # Only add to history if it differs from what was typed (e.g. bare "and")
-  [[ -n $resolved && $resolved != "and${*:+ $*}" ]] && print -s -- "$resolved"
+  [[ -n $resolved && $resolved != "$name${*:+ $*}" ]] && print -s -- "$resolved"
   return $rc
 }
+and()  { _run_with_history and  "$HOME/dotfiles/and/and.sh"        "$@" }
+papa() { _run_with_history papa "$HOME/dotfiles/paparazzi/papa.sh" "$@" }
+
 
 ## Gradle
 alias gw='./gradlew'

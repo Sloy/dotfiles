@@ -35,6 +35,7 @@ command -v fzf >/dev/null 2>&1 || die "needs fzf. Install with: brew install fzf
 command -v git >/dev/null 2>&1 || die "needs git"
 
 REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || die "not inside a git repository"
+CDUP="$(git rev-parse --show-cdup)"   # e.g. "../../", empty at repo root
 cd "$REPO_ROOT" || exit 1
 
 is_module_root() {
@@ -226,6 +227,9 @@ main() {
   esac
 
   cmd="./gradlew ${gradle_path}:${task}"
+
+  [[ -n "${RESOLVED_CMD_FILE:-}" ]] && \
+  printf '%s\n' "${CDUP:-./}gradlew ${gradle_path}:${task}" > "$RESOLVED_CMD_FILE"
 
   printf '\n%s%s%s\n' "$CYAN" "$(hr)" "$RESET"
   printf ' %s%sPAPARAZZI · %s%s\n' "$BOLD" "$CYAN" "$title" "$RESET"
