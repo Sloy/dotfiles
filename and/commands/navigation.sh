@@ -39,6 +39,8 @@ esac
 resolve_device
 banner "NAVIGATION" "and navigation $arg" "$DEVICE_LABEL"
 
-"${ADB[@]}" shell cmd overlay enable "$overlay" || die "failed to enable $overlay"
+"${ADB[@]}" shell cmd overlay enable-exclusive --category "$overlay" || die "failed to enable $overlay"
+
+spinner 1 "Changing navigation mode…"
 
 ok "navigation set to $arg"

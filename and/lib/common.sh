@@ -68,6 +68,10 @@ require_fzf() {
 # Renders an fzf menu and sets PICK_RESULT to the chosen value. Must be called
 # directly (not via `$(...)`) so that `die` on cancel exits the script rather
 # than just a command-substitution subshell.
+#
+# Descriptions are documentation, not search keys: --nth=1 restricts matching to
+# the value so that e.g. "screen" finds screenshot without also dragging in
+# talkback for "accessibility screen reader".
 pick() {
   local label="$1"; shift
   require_fzf
@@ -90,7 +94,7 @@ pick() {
     fi
   done
 
-  local args=("${FZF_STYLE[@]}")
+  local args=("${FZF_STYLE[@]}" --nth=1)
   if [[ "$FZF_MODERN" -eq 1 ]]; then
     args+=(--border-label=" $label " --header='↑↓ move · enter select · esc quit')
   else
@@ -109,6 +113,8 @@ pick() {
 # picked is always visible to copy.
 banner() {
   local title="$1" cmd="$2" device="${3:-}"
+    # Hand the resolved command back to the zsh wrapper (see aliases.zsh)
+  [[ -n "${AND_RESOLVED_FILE:-}" ]] && printf '%s\n' "$cmd" > "$AND_RESOLVED_FILE"
   printf '\n%s%s%s\n' "$CYAN" "$(hr)" "$RESET"
   printf ' %s%sANDROID · %s%s\n' "$BOLD" "$CYAN" "$title" "$RESET"
   [[ -n "$device" ]] && printf ' %sDevice%s   %s\n' "$DIM" "$RESET" "$device"
@@ -118,3 +124,58 @@ banner() {
 
 ok()   { printf ' %s%s✓%s %s\n' "$BOLD" "$GREEN" "$RESET" "$*"; }
 warn() { printf ' %s!%s %s\n' "$RED" "$RESET" "$*" >&2; }
+
+# _spin_frame <tick> <text>
+#
+# Redraws the spinner line in place. Shared by spinner and countdown.
+_spin_frame() {
+  local tick="$1" text="$2"
+  local frames=(⠋ ⠙ ⠹ ⠸ ⠼ ⠴ ⠦ ⠧ ⠇ ⠏)
+  printf '\r %s%s%s %s%s%s' "$CYAN" "${frames[tick % 10]}" "$RESET" "$DIM" "$text" "$RESET"
+}
+
+# spinner <seconds> <message>
+#
+# Holds a braille spinner for roughly <seconds> then erases the line, to cover
+# the gap between an adb command returning and the device actually settling.
+# The wait is cosmetic, so a non-terminal stdout gets one dim line and no delay.
+spinner() {
+  local seconds="$1" message="$2"
+  local ticks=$(( seconds * 10 )) i
+
+  if [[ ! -t 1 ]]; then
+    printf ' %s%s%s\n' "$DIM" "$message" "$RESET"
+    return
+  fi
+
+  for (( i = 0; i < ticks; i++ )); do
+    _spin_frame "$i" "$message"
+    sleep 0.1
+  done
+  printf '\r\033[K'
+}
+
+# countdown <seconds> <prefix>
+#
+# Spinner whose message counts the remaining seconds down, e.g.
+# "Screenshot in 5…". Unlike spinner the delay is the point rather than
+# decoration, so a non-terminal stdout still waits, printing a line per second.
+countdown() {
+  local seconds="$1" prefix="$2"
+  local ticks=$(( seconds * 10 )) i remaining
+
+  if [[ ! -t 1 ]]; then
+    for (( remaining = seconds; remaining > 0; remaining-- )); do
+      printf ' %s%s %s…%s\n' "$DIM" "$prefix" "$remaining" "$RESET"
+      sleep 1
+    done
+    return
+  fi
+
+  for (( i = 0; i < ticks; i++ )); do
+    remaining=$(( seconds - i / 10 ))
+    _spin_frame "$i" "$prefix ${remaining}…"
+    sleep 0.1
+  done
+  printf '\r\033[K'
+}

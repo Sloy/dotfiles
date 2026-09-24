@@ -7,7 +7,8 @@ set -uo pipefail
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/lib/common.sh"
 source "$AND_LIB/device.sh"
 
-TALKBACK_SERVICE="com.google.android.marvin.talkback/com.google.android.marvin.talkback.TalkBackService"
+TALKBACK_PACKAGE="com.google.android.marvin.talkback"
+TALKBACK_SERVICE="$TALKBACK_PACKAGE/com.google.android.marvin.talkback.TalkBackService"
 
 usage() {
   cat <<USAGE
@@ -45,11 +46,24 @@ banner "TALKBACK" "and talkback $arg" "$DEVICE_LABEL"
 action="$arg"
 if [[ "$action" == "toggle" ]]; then
   current="$("${ADB[@]}" shell settings get secure enabled_accessibility_services 2>/dev/null | tr -d '\r\n')"
-  if [[ -z "$current" || "$current" == "null" ]]; then
-    action="on"
-  else
+  if [[ "$current" == *"$TALKBACK_PACKAGE"* ]]; then
     action="off"
+  else
+    action="on"
   fi
+fi
+
+# TalkBack ships inside the Android Accessibility Suite, which is missing from
+# AOSP and some Google APIs images. Without it the write below still succeeds and
+# absolutely nothing happens, so stop rather than claim success. Only the
+# enabling path cares: turning it off with nothing installed is already a no-op,
+# and shoving the Play Store at someone trying to disable it would be perverse.
+if [[ "$action" == "on" ]] && ! package_installed "$TALKBACK_PACKAGE"; then
+  warn "TalkBack is not installed on $DEVICE_LABEL."
+  if open_play_store "$TALKBACK_PACKAGE"; then
+    die "Opened the Play Store listing — install Android Accessibility Suite, then rerun: and talkback $arg"
+  fi
+  die "No Play Store on this device either. Use a Play Store system image or a physical device."
 fi
 
 if [[ "$action" == "on" ]]; then

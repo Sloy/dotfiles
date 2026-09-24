@@ -72,3 +72,29 @@ resolve_device() {
   DEVICE_LABEL="$(device_label "$id" "$line")"
   ADB=(adb -s "$id")
 }
+
+PLAY_STORE_PACKAGE="com.android.vending"
+
+# package_installed <package>
+#
+# True when the resolved device has exactly <package> installed. `pm list
+# packages` filters by substring, so the match is anchored to avoid
+# com.foo.bar answering for com.foo.
+package_installed() {
+  "${ADB[@]}" shell pm list packages "$1" 2>/dev/null \
+    | tr -d '\r' | grep -qx "package:$1"
+}
+
+# open_play_store <package>
+#
+# Opens the Play Store listing for <package> on the resolved device. Returns
+# non-zero when the device has no Play Store, so callers can fall back to a
+# plain error instead of promising an install route that does not exist.
+open_play_store() {
+  local package="$1" out
+  package_installed "$PLAY_STORE_PACKAGE" || return 1
+  out="$("${ADB[@]}" shell am start -a android.intent.action.VIEW \
+    -d "market://details?id=$package" 2>&1 | tr -d '\r')"
+  # `am start` exits 0 even when it fails to resolve the intent.
+  [[ "$out" != *Error* ]]
+}

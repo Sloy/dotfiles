@@ -52,11 +52,7 @@ lines="$(adb_device_lines)"
 count="$(printf '%s\n' "$lines" | grep -c .)"
 banner "SCREENSHOT" "and screenshot $arg" "all connected ($count)"
 
-while [[ "$delay" -gt 0 ]]; do
-  printf ' %sScreenshot in %s…%s\n' "$DIM" "$delay" "$RESET"
-  sleep 1
-  (( delay-- ))
-done
+[[ "$delay" -gt 0 ]] && countdown "$delay" "Screenshot in"
 
 failed=0
 while IFS= read -r line; do

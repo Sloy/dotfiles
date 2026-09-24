@@ -21,7 +21,18 @@ alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall F
 alias papa="$HOME/dotfiles/paparazzi/papa.sh"
 
 ## Android
-alias and="$HOME/dotfiles/and/and.sh"
+unalias and 2>/dev/null
+and() {
+  local out rc resolved
+  out=$(mktemp)
+  AND_RESOLVED_FILE=$out "$HOME/dotfiles/and/and.sh" "$@"
+  rc=$?
+  resolved=$(<$out)
+  rm -f $out
+  # Only add to history if it differs from what was typed (e.g. bare "and")
+  [[ -n $resolved && $resolved != "and${*:+ $*}" ]] && print -s -- "$resolved"
+  return $rc
+}
 
 ## Gradle
 alias gw='./gradlew'
