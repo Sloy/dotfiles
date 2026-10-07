@@ -13,6 +13,7 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 COMMANDS=(
   "animations|window, transition and animator scales"
   "screenshot|capture every device to ~/Downloads"
+  "record|record the screen to ~/Downloads"
   "touch-pointer|show or hide the touch indicators"
   "font-size|system font scale"
   "talkback|accessibility screen reader"
@@ -41,6 +42,7 @@ for that command's arguments.
 Examples:
   and screenshot now
   and screenshot 5
+  and record
   and font-size 1.15
   and animations off
   and talkback toggle
@@ -55,6 +57,7 @@ canonical() {
   case "$raw" in
     animations|animation|anim)            printf 'animations' ;;
     screenshot|screenshots|shot|ss)       printf 'screenshot' ;;
+    record|rec|recording|video|screenrecord) printf 'record' ;;
     touchpointer|touch|touches|pointer)   printf 'touch-pointer' ;;
     fontsize|font|fontscale)              printf 'font-size' ;;
     talkback|tb)                          printf 'talkback' ;;
