@@ -61,10 +61,11 @@ Add machine-specific overrides to `~/.localrc` — it is sourced automatically i
 
 | Command | Arguments |
 |---|---|
-| `and animations` | `off` (0.0) · `fast` (0.5) · `on` (1.0) · `slow` (5.0) · any raw scale |
+| `and animations` | `off` (0.0) · `fast` (0.5) · `on` (1.0) · `slow` (5.0) · any raw scale · `get` (print current) |
 | `and screenshot` | `now` · `<seconds>` to count down first |
+| `and record` | — (records screen until enter is pressed, pulls mp4 to `~/Downloads`; 3 min Android cap) |
 | `and touch-pointer` | `on` · `off` |
-| `and font-size` | `0.85` · `1` · `1.15` · `1.30` · any raw scale |
+| `and font-size` | `0.85` · `1` · `1.15` · `1.30` · any raw scale · `get` (print current) |
 | `and talkback` | `toggle` · `on` · `off` |
 | `and navigation` | `gestures` · `buttons` |
 | `and paste` | — (types the macOS clipboard into the focused field) |
