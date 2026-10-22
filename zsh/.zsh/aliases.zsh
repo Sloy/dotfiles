@@ -86,15 +86,27 @@ function ffcompress() {
   done
 
   if [ "${#args[@]}" -eq 0 ]; then
-    echo "Usage: ffcompress <input_file> [-a|--keep-audio] [-b|--boost-volume[=N]]"
+    echo "Usage: ffcompress <input_file|last> [-a|--keep-audio] [-b|--boost-volume[=N]]"
     echo "Example: ffcompress 'Screen Recording.mov'"
     echo "         ffcompress 'Screen Recording.mov' -a"
     echo "         ffcompress 'Screen Recording.mov' -b"
     echo "         ffcompress 'Screen Recording.mov' -b=5"
+    echo "         ffcompress last"
     return 1
   fi
 
   local input_file="${args[1]}"
+
+  if [[ "$input_file" == "last" ]]; then
+    local -a recent_downloads
+    recent_downloads=("$HOME/Downloads"/*.(mp4|mov|MP4|MOV)(N.om[1]))
+    if [ "${#recent_downloads[@]}" -eq 0 ]; then
+      echo "Error: No video files (mp4, mov) found in $HOME/Downloads"
+      return 1
+    fi
+    input_file="${recent_downloads[1]}"
+    echo "Using most recent download: $input_file"
+  fi
 
   if [ ! -f "$input_file" ]; then
     echo "Error: Input file '$input_file' not found"
