@@ -24,7 +24,7 @@ This is a personal dotfiles repository for macOS (zsh). It symlinks configuratio
 - `proxy/prox.sh` — `prox` function for toggling HTTP proxy on Android emulators via adb
 - `git/.gitconfig` — git aliases, diff-so-fancy pager, credential helper
 - `homebrew/Brewfile` — managed packages (bat, fzf, diff-so-fancy, jq, etc.)
-- `paparazzi/papa.sh` — `papa` CLI: fzf-driven record/verify for Paparazzi screenshot tests
+- `paparazzi/papa.sh` — `papa` CLI: fzf-driven record/verify for Paparazzi screenshot tests. Runs `:kspDebugKotlin --rerun-tasks` first as a workaround: the current Gradle setup doesn't detect changed code and skips the task otherwise
 - `raycast/` — Raycast script commands; point Raycast to `~/dotfiles/raycast` in Settings → Extensions → Script Commands
 
 ## Machine-specific config

@@ -215,7 +215,7 @@ pick_action() {
 }
 
 main() {
-  local gradle_path task cmd title status elapsed
+  local gradle_path task ksp_cmd cmd title status elapsed
   resolve_module
   gradle_path="$(dir_to_gradle_path "$RESOLVED_MODULE_DIR")"
 
@@ -226,6 +226,7 @@ main() {
     *) die "unknown action: $PICKED_ACTION" ;;
   esac
 
+  ksp_cmd="./gradlew ${gradle_path}:kspDebugKotlin --rerun-tasks"
   cmd="./gradlew ${gradle_path}:${task}"
 
   [[ -n "${RESOLVED_CMD_FILE:-}" ]] && \
@@ -234,12 +235,17 @@ main() {
   printf '\n%s%s%s\n' "$CYAN" "$(hr)" "$RESET"
   printf ' %s%sPAPARAZZI · %s%s\n' "$BOLD" "$CYAN" "$title" "$RESET"
   printf ' %sModule%s   %s\n' "$DIM" "$RESET" "$gradle_path"
-  printf ' %sCommand%s  %s\n' "$DIM" "$RESET" "$cmd"
+  printf ' %sCommand%s  %s\n' "$DIM" "$RESET" "$ksp_cmd"
+  printf ' %s        %s %s\n' "$DIM" "$RESET" "$cmd"
   printf '%s%s%s\n\n' "$CYAN" "$(hr)" "$RESET"
 
   SECONDS=0
-  eval "$cmd"
+  eval "$ksp_cmd"
   status=$?
+  if [[ $status -eq 0 ]]; then
+    eval "$cmd"
+    status=$?
+  fi
   elapsed=$SECONDS
 
   printf '\n'
