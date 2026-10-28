@@ -9,12 +9,12 @@ source "$AND_LIB/device.sh"
 
 usage() {
   cat <<USAGE
-and font-size [0.85|1|1.15|1.30|<scale>]
+and font-size [0.85|1|1.5|2|<scale>]
 
   0.85    small
   1       default
-  1.15    large
-  1.30    largest
+  1.5     large
+  2       largest
   <scale> any raw scale, e.g. 1.5
 
 Runs interactively when no argument is given.
@@ -30,8 +30,8 @@ if [[ -z "$arg" ]]; then
   pick "Font scale" \
     "0.85|small" \
     "1|default" \
-    "1.15|large" \
-    "1.30|largest"
+    "1.5|large" \
+    "2|largest"
   arg="$PICK_RESULT"
 fi
 
