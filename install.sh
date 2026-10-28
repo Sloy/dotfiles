@@ -35,4 +35,5 @@ createSymlink $DOTFILES_DIR/git/.gitignore_global ~/.gitignore_global
 createSymlink $DOTFILES_DIR/zsh/.zshrc ~/.zshrc
 createSymlink $DOTFILES_DIR/zsh/.zsh ~/.zsh
 
-
+# a (Android adb helpers, sourced from zsh/.zsh/aliases.zsh)
+curl -fsSL https://raw.githubusercontent.com/Sloy/a/main/install.sh | A_NO_MODIFY_RC=1 bash

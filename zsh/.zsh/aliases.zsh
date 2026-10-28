@@ -18,7 +18,7 @@ alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall 
 alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
 
 ## Android
-unalias and papa 2>/dev/null
+unalias papa 2>/dev/null
 # Runs a script and adds the command it resolved to shell history.
 _run_with_history() {
   local name=$1 script=$2; shift 2
@@ -31,8 +31,8 @@ _run_with_history() {
   [[ -n $resolved && $resolved != "$name${*:+ $*}" ]] && print -s -- "$resolved"
   return $rc
 }
-and()  { _run_with_history and  "$HOME/dotfiles/and/and.sh"        "$@" }
 papa() { _run_with_history papa "$HOME/dotfiles/paparazzi/papa.sh" "$@" }
+[[ -f "$HOME/.a/init.sh" ]] && source "$HOME/.a/init.sh"
 
 
 ## Gradle
