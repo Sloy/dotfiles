@@ -17,10 +17,10 @@ This is a personal dotfiles repository for macOS (zsh). It symlinks configuratio
 
 ## Structure
 
-- `zsh/.zshrc` — entry point; sources `config.zsh`, `paths.zsh`, `aliases.zsh`
+- `zsh/.zshrc` — entry point; sources `config.zsh`, `paths.zsh`, `aliases.zsh`; loads [worktrunk](https://worktrunk.dev) (`wt`) shell integration if installed
 - `zsh/.zsh/aliases.zsh` — all shell aliases and functions (Gradle, ffmpeg, git worktrees, etc.)
 - `zsh/.zsh/config.zsh` — shell environment: editor, fzf, nvm, Homebrew, sdkman, proxy
-- `zsh/.zsh/paths.zsh` — `$PATH` and `$ANDROID_HOME` / `$GRADLE_USER_HOME`
+- `zsh/.zsh/paths.zsh` — `$PATH` (including `~/.local/bin` for the `android` CLI) and `$ANDROID_HOME` / `$GRADLE_USER_HOME`
 - `proxy/prox.sh` — `prox` function for toggling HTTP proxy on Android emulators via adb
 - `git/.gitconfig` — git aliases, diff-so-fancy pager, credential helper
 - `homebrew/Brewfile` — managed packages (bat, fzf, diff-so-fancy, jq, etc.)
@@ -50,7 +50,7 @@ Add machine-specific overrides to `~/.localrc` — it is sourced automatically i
 
 ## Key shell functions (from `aliases.zsh`)
 
-- `ffcompress <file>` — compress video with ffmpeg (libx264, crf 28, strips audio)
+- `ffcompress <file>` — compress video with ffmpeg (libx264, crf 28, strips audio); `ffcompress last` uses the newest file in `~/Downloads`
 - `prox <config> [-i]` / `prox none` — enable/disable Charles proxy on Android emulator; `-i` installs SSL cert
 - `taskTree <task>` — display Gradle task dependency tree
 

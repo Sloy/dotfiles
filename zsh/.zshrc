@@ -24,3 +24,5 @@ fi
 
 # Fix for Android Emulator messing with bluetooth audio
 export QEMU_AUDIO_DRV=none
+
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
