@@ -72,10 +72,12 @@
 	ft = "!f() { git describe --always --contains $1; }; f"
 
 	## ADVANCED COMMANDS
-	# Deletes local merged branches except for master and develop
-	bclean = "!git branch --merged | grep -v \"*\" | grep -v master | grep -v develop | xargs -n 1 git branch -d"
-	# Deletes local branches whose remote is gone. Doesn't include local-only branches
-	roomba = "!f() { git fetch -p && git for-each-ref --format='%(refname:short)|%(upstream:track)|%(worktreepath)' refs/heads | while IFS='|' read -r branch track worktree; do [ \"$track\" = '[gone]' ] || continue; if [ -n \"$worktree\" ]; then echo \"skipping $branch (checked out in $worktree)\" >&2; else git branch -D \"$branch\"; fi; done; }; f"
+	# Deletes local branches whose remote is gone, plus local-only branches already merged into HEAD (except master and develop). Skips branches checked out in a worktree
+	bclean = "!git for-each-ref --format='%(refname:short)|%(upstream:track)|%(worktreepath)' refs/heads | while IFS='|' read -r branch track worktree; do if [ \"$track\" = '[gone]' ] && [ -z \"$worktree\" ]; then git branch -D \"$branch\"; fi; done; git for-each-ref --merged HEAD --format='%(refname:short)|%(upstream)|%(worktreepath)' refs/heads | while IFS='|' read -r branch upstream worktree; do if [ -z \"$upstream\" ] && [ -z \"$worktree\" ] && [ \"$branch\" != master ] && [ \"$branch\" != develop ]; then git branch -d \"$branch\"; fi; done"
+	# Removes worktrees (and their branch) whose remote branch is gone. Skips dirty or locked worktrees and prints the force command
+	wtclean = "!f() { main=$(git worktree list --porcelain | sed -n '1s/^worktree //p') && cd \"$main\" && unset GIT_DIR GIT_WORK_TREE; y=; d=; r=; if [ -t 2 ]; then y=$(printf '\\033[33m'); d=$(printf '\\033[90m'); r=$(printf '\\033[0m'); fi; git for-each-ref --format='%(refname:short)|%(upstream:track)|%(worktreepath)' refs/heads | while IFS='|' read -r branch track worktree; do [ \"$track\" = '[gone]' ] && [ -n \"$worktree\" ] && [ \"$worktree\" != \"$main\" ] || continue; echo \"Deleting ${worktree##*/}...\"; git worktree remove \"$worktree\" 2>/dev/null || { echo \"${y}Skipped ${worktree##*/} (uncommitted changes or locked)${r}\" >&2; echo \"${d}  git worktree remove --force '$worktree'${r}\" >&2; continue; }; echo \"Deleted ${worktree##*/}\"; git branch -D \"$branch\"; done; }; f"
+	# Fetches and prunes, then deletes local branches and worktrees whose remote is gone
+	roomba = "!git fetch -p && git bclean && git wtclean"
 	# Pushes the current branch to a new remote branch in origin and track it
 	pushr = "!f() { git rev-parse --abbrev-ref HEAD | xargs git push -u origin; }; f"
 	# Pulls the master branch and leaves you in the current branch
