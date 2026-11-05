@@ -82,6 +82,30 @@ last_commit_files() {
   git show --name-only --pretty=format: HEAD 2>/dev/null | grep -v '^$'
 }
 
+# Files changed on the current branch since it diverged from master/main.
+# Falls back to the last commit when on master/main or no base branch exists.
+branch_files() {
+  local current base
+  current="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
+  case "$current" in
+    master|main|HEAD) last_commit_files; return ;;
+  esac
+
+  for base in master main origin/master origin/main; do
+    if git rev-parse --verify --quiet "$base" >/dev/null; then
+      local files
+      files="$(git diff --name-only "$base"...HEAD 2>/dev/null | grep -v '^$')"
+      if [[ -n "$files" ]]; then
+        printf '%s\n' "$files"
+        return
+      fi
+      break
+    fi
+  done
+
+  last_commit_files
+}
+
 # Prints unique module dirs reachable from a newline list of files.
 roots_from_files() {
   local files="$1"
@@ -97,13 +121,13 @@ roots_from_files() {
 }
 
 # Prints unique module directories guessed from changed files. Falls back to
-# the last commit when uncommitted files exist but none map to a module
-# (e.g. a stray file at the repo root).
+# the branch diff against master/main (or the last commit) when uncommitted
+# files don't map to a module (e.g. a stray file at the repo root).
 guess_module_dirs() {
   local roots
   roots="$(roots_from_files "$(uncommitted_files)")"
   if [[ -z "$roots" ]]; then
-    roots="$(roots_from_files "$(last_commit_files)")"
+    roots="$(roots_from_files "$(branch_files)")"
   fi
   printf '%s' "$roots"
 }
@@ -178,7 +202,7 @@ resolve_module() {
   candidates="$(guess_module_dirs)"
 
   if [[ -z "$candidates" ]]; then
-    log "papa: couldn't guess a module from uncommitted changes or the last commit."
+    log "papa: couldn't guess a module from uncommitted changes or the branch diff."
   fi
 
   while true; do
