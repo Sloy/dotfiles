@@ -27,6 +27,11 @@ export LANG=en_US.UTF-8
 # Nvm — lazy-loaded. nvm.sh costs ~1s to source, so we defer it until nvm/node/npm/npx is actually invoked.
 if [[ -s /opt/homebrew/opt/nvm/nvm.sh ]]; then
   export NVM_DIR="$HOME/.nvm"
+  if [[ -r "$NVM_DIR/alias/default" ]]; then
+    _nvm_default="$(<"$NVM_DIR/alias/default")"
+    [[ -d "$NVM_DIR/versions/node/v${_nvm_default#v}/bin" ]] && export PATH="$NVM_DIR/versions/node/v${_nvm_default#v}/bin:$PATH"
+    unset _nvm_default
+  fi
   _nvm_load() {
     unset -f nvm node npm npx
     source /opt/homebrew/opt/nvm/nvm.sh
